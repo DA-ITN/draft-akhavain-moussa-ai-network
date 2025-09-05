@@ -3,7 +3,7 @@ title: "AI Network for Training, Inference, and Agentic Interactions"
 abbrev: "AI-Internet"
 category: info
 
-docname: draft-akhavain-moussa-ai-network-00
+docname: draft-akhavain-moussa-ai-network-01
 submissiontype: IETF
 number:
 date:
