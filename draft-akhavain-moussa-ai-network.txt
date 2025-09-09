@@ -5,11 +5,11 @@
 Network Working Group                                        A. Akhavain
 Internet-Draft                                                 H. Moussa
 Intended status: Informational                             Huawei Canada
-Expires: 23 January 2026                                    22 July 2025
+Expires: 13 March 2026                                  9 September 2025
 
 
       AI Network for Training, Inference, and Agentic Interactions
-                  draft-akhavain-moussa-ai-network-00
+                  draft-akhavain-moussa-ai-network-01
 
 Abstract
 
@@ -53,12 +53,12 @@ Status of This Memo
 
 
 
-Akhavain & Moussa        Expires 23 January 2026                [Page 1]
+Akhavain & Moussa         Expires 13 March 2026                 [Page 1]
 
-Internet-Draft                 AI-Internet                     July 2025
+Internet-Draft                 AI-Internet                September 2025
 
 
-   This Internet-Draft will expire on 23 January 2026.
+   This Internet-Draft will expire on 13 March 2026.
 
 Copyright Notice
 
@@ -80,7 +80,7 @@ Table of Contents
    2.  Training Requirements . . . . . . . . . . . . . . . . . . . .   4
      2.1.  Centralized versus Decentralized Training . . . . . . . .   4
      2.2.  Requirements Breakdown  . . . . . . . . . . . . . . . . .   5
-       2.2.1.  Data Collection/Model Dispatching . . . . . . . . . .   5
+       2.2.1.  Data Collection/Model Dispatching . . . . . . . . . .   6
        2.2.2.  Data and Resource Discovery . . . . . . . . . . . . .   7
        2.2.3.  Mobility and Service Continuity Handling  . . . . . .   9
        2.2.4.  Privacy, Trust, and Data Ownership and Utility  . . .  10
@@ -98,28 +98,33 @@ Table of Contents
        3.1.7.  Utility Handling and QoS Requirements . . . . . . . .  19
        3.1.8.  Model Upgrade Streamlining  . . . . . . . . . . . . .  20
        3.1.9.  Charging and Billing  . . . . . . . . . . . . . . . .  21
-   4.  Data Aware Inference and Training Network (DA-ITN): General
-           Framework . . . . . . . . . . . . . . . . . . . . . . . .  21
-     4.1.  Control plane and Intelligence Layer  . . . . . . . . . .  22
-     4.2.  Data Plane  . . . . . . . . . . . . . . . . . . . . . . .  23
-     4.3.  Operation and Management Plane (OAM)  . . . . . . . . . .  23
-     4.4.  Summary of the DA-ITN General Framework . . . . . . . . .  24
-   5.  DA-ITN for Training . . . . . . . . . . . . . . . . . . . . .  24
-   6.  DA-ITN for Inference  . . . . . . . . . . . . . . . . . . . .  28
+   4.  Data and Agent Aware Inference and Training Network (DA-ITN):
+           General Framework . . . . . . . . . . . . . . . . . . . .  21
+     4.1.  DA-ITN Core . . . . . . . . . . . . . . . . . . . . . . .  23
+     4.2.  DA-ITN Service Provider Community . . . . . . . . . . . .  24
+     4.3.  DA-ITN Client Community . . . . . . . . . . . . . . . . .  25
+     4.4.  DA-ITN Enablers . . . . . . . . . . . . . . . . . . . . .  26
+   5.  DA-ITN high level architecture  . . . . . . . . . . . . . . .  27
+     5.1.  Control plane and Intelligence Layer  . . . . . . . . . .  27
 
 
 
-Akhavain & Moussa        Expires 23 January 2026                [Page 2]
+Akhavain & Moussa         Expires 13 March 2026                 [Page 2]
 
-Internet-Draft                 AI-Internet                     July 2025
+Internet-Draft                 AI-Internet                September 2025
 
 
-   7.  DA-ITN-Facilitation Agentic Networks  . . . . . . . . . . . .  29
-   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  30
-   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  30
-   10. Conclusions . . . . . . . . . . . . . . . . . . . . . . . . .  31
-   Contributors  . . . . . . . . . . . . . . . . . . . . . . . . . .  31
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  31
+     5.2.  Data Plane  . . . . . . . . . . . . . . . . . . . . . . .  29
+     5.3.  Operation and Management Plane (OAM)  . . . . . . . . . .  29
+     5.4.  Summary of the DA-ITN General Framework . . . . . . . . .  30
+   6.  DA-ITN for Training . . . . . . . . . . . . . . . . . . . . .  31
+   7.  DA-ITN for Inference  . . . . . . . . . . . . . . . . . . . .  34
+   8.  DA-ITN-Facilitation Agentic Networks  . . . . . . . . . . . .  35
+   9.  Security Considerations . . . . . . . . . . . . . . . . . . .  36
+   10. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  36
+   11. Conclusions . . . . . . . . . . . . . . . . . . . . . . . . .  36
+   Contributors  . . . . . . . . . . . . . . . . . . . . . . . . . .  37
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  37
 
 1.  Introduction
 
@@ -152,23 +157,22 @@ Internet-Draft                 AI-Internet                     July 2025
    In this document, we present a vision of an ecosystem, especially
    designed to satisfy the requirements of AI from training and
    inference points of view.  We propose a unified, intelligent network
-   architecture—the Data Aware-Inference and Training Network (DA-ITN).
-   This ecosystem is envisioned as a comprehensive, multi-plane network
-   with dedicated control, data, and operations & management (OAM)
-   planes.  It is designed to interconnect all relevant stakeholders,
-   including clients, AI service providers, data providers, and third-
-   party facilitators.  Its core objective is to provide the
-   infrastructure and coordination necessary to support an ecosystem for
-   enabling AI of the future at scale.
+   architecture—the Data and Agent aware-Inference and Training Network
+   (DA-ITN).  This ecosystem is envisioned as a comprehensive, multi-
+   plane network with dedicated control, data, and operations &
+   management (OAM) planes.  It is designed to interconnect all relevant
+   stakeholders, including clients, AI service providers, data
 
 
 
-
-
-Akhavain & Moussa        Expires 23 January 2026                [Page 3]
+Akhavain & Moussa         Expires 13 March 2026                 [Page 3]
 
-Internet-Draft                 AI-Internet                     July 2025
+Internet-Draft                 AI-Internet                September 2025
 
+
+   providers, and third-party facilitators.  Its core objective is to
+   provide the infrastructure and coordination necessary to support an
+   ecosystem for enabling AI of the future at scale.
 
    This document aims to introduce the DA-ITN vision and establish a
    compelling case for its central role in enabling a new generation of
@@ -212,20 +216,22 @@ Internet-Draft                 AI-Internet                     July 2025
    constraints, or edge-device generation, data rarely exists in a
    single, clean repository.
 
+
+
+
+
+
+Akhavain & Moussa         Expires 13 March 2026                 [Page 4]
+
+Internet-Draft                 AI-Internet                September 2025
+
+
    Today, model training can happen in one of two ways or a combination
    thereof: centralized or decentralized.  In centralized training,
    thanks to the development of robust data collection techniques and
    high-throughput connectivity networks, it is now feasible to collect
    data and bring it to where the model training would occur.  This
    traditional approach is often referred to as model-centralized
-
-
-
-Akhavain & Moussa        Expires 23 January 2026                [Page 4]
-
-Internet-Draft                 AI-Internet                     July 2025
-
-
    training.  On the other hand, a more recent paradigm known as model-
    follow-data has emerged, advocating for the reverse: rather than
    transporting large volumes of potentially sensitive data to a central
@@ -261,6 +267,21 @@ Internet-Draft                 AI-Internet                     July 2025
    locations.  AI clients require access to this data either in a
    centralized or distributed manner.
 
+
+
+
+
+
+
+
+
+
+
+Akhavain & Moussa         Expires 13 March 2026                 [Page 5]
+
+Internet-Draft                 AI-Internet                September 2025
+
+
 2.2.1.  Data Collection/Model Dispatching
 
    As previously discussed, data is inherently distributed.  In
@@ -271,16 +292,6 @@ Internet-Draft                 AI-Internet                     July 2025
    interest.  Aggregating large volumes of data from geographically
    dispersed sources to centralized servers introduces several
    significant challenges:
-
-
-
-
-
-
-Akhavain & Moussa        Expires 23 January 2026                [Page 5]
-
-Internet-Draft                 AI-Internet                     July 2025
-
 
    *  Communication Overhead: The sheer volume of data to be transmitted
       can place substantial strain on the underlying transport networks,
@@ -319,6 +330,14 @@ Internet-Draft                 AI-Internet                     July 2025
    distributed to the various data locations.  However, this alternate
    paradigm introduces its own set of unique challenges.
 
+
+
+
+Akhavain & Moussa         Expires 13 March 2026                 [Page 6]
+
+Internet-Draft                 AI-Internet                September 2025
+
+
    As previously noted, modern AI models are growing increasingly large
    in size.  In decentralized training, it is often necessary to
    replicate the model and transmit it to multiple, geographically
@@ -330,13 +349,6 @@ Internet-Draft                 AI-Internet                     July 2025
       destinations can still impose substantial load on communication
       infrastructure, particularly in bandwidth-constrained
       environments.
-
-
-
-Akhavain & Moussa        Expires 23 January 2026                [Page 6]
-
-Internet-Draft                 AI-Internet                     July 2025
-
 
    *  Redundant Knowledge Transfer: Data residing at different locations
       may share overlapping knowledge content.  Sending models to
@@ -377,21 +389,9 @@ Internet-Draft                 AI-Internet                     July 2025
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-Akhavain & Moussa        Expires 23 January 2026                [Page 7]
+Akhavain & Moussa         Expires 13 March 2026                 [Page 7]
 
-Internet-Draft                 AI-Internet                     July 2025
+Internet-Draft                 AI-Internet                September 2025
 
 
    *  Data Descriptors: These are metadata objects used by data owners
@@ -445,9 +445,9 @@ Internet-Draft                 AI-Internet                     July 2025
 
 
 
-Akhavain & Moussa        Expires 23 January 2026                [Page 8]
+Akhavain & Moussa         Expires 13 March 2026                 [Page 8]
 
-Internet-Draft                 AI-Internet                     July 2025
+Internet-Draft                 AI-Internet                September 2025
 
 
       reporting helps prevent training on outdated or irrelevant data
@@ -501,9 +501,9 @@ Internet-Draft                 AI-Internet                     July 2025
 
 
 
-Akhavain & Moussa        Expires 23 January 2026                [Page 9]
+Akhavain & Moussa         Expires 13 March 2026                 [Page 9]
 
-Internet-Draft                 AI-Internet                     July 2025
+Internet-Draft                 AI-Internet                September 2025
 
 
 2.2.4.  Privacy, Trust, and Data Ownership and Utility
@@ -557,9 +557,9 @@ Internet-Draft                 AI-Internet                     July 2025
 
 
 
-Akhavain & Moussa        Expires 23 January 2026               [Page 10]
+Akhavain & Moussa         Expires 13 March 2026                [Page 10]
 
-Internet-Draft                 AI-Internet                     July 2025
+Internet-Draft                 AI-Internet                September 2025
 
 
    *  Should AI training be treated like best-effort traffic, where no
@@ -613,9 +613,9 @@ Internet-Draft                 AI-Internet                     July 2025
 
 
 
-Akhavain & Moussa        Expires 23 January 2026               [Page 11]
+Akhavain & Moussa         Expires 13 March 2026                [Page 11]
 
-Internet-Draft                 AI-Internet                     July 2025
+Internet-Draft                 AI-Internet                September 2025
 
 
    ecosystems.  These challenges call for further research into
@@ -669,9 +669,9 @@ Internet-Draft                 AI-Internet                     July 2025
 
 
 
-Akhavain & Moussa        Expires 23 January 2026               [Page 12]
+Akhavain & Moussa         Expires 13 March 2026                [Page 12]
 
-Internet-Draft                 AI-Internet                     July 2025
+Internet-Draft                 AI-Internet                September 2025
 
 
    decisions critical to achieving both efficient performance and
@@ -725,9 +725,9 @@ Internet-Draft                 AI-Internet                     July 2025
 
 
 
-Akhavain & Moussa        Expires 23 January 2026               [Page 13]
+Akhavain & Moussa         Expires 13 March 2026                [Page 13]
 
-Internet-Draft                 AI-Internet                     July 2025
+Internet-Draft                 AI-Internet                September 2025
 
 
    In summary, optimal model deployment requires careful consideration
@@ -781,9 +781,9 @@ Internet-Draft                 AI-Internet                     July 2025
 
 
 
-Akhavain & Moussa        Expires 23 January 2026               [Page 14]
+Akhavain & Moussa         Expires 13 March 2026                [Page 14]
 
-Internet-Draft                 AI-Internet                     July 2025
+Internet-Draft                 AI-Internet                September 2025
 
 
    *  Model Descriptors: These are metadata objects used by model owners
@@ -837,9 +837,9 @@ Internet-Draft                 AI-Internet                     July 2025
 
 
 
-Akhavain & Moussa        Expires 23 January 2026               [Page 15]
+Akhavain & Moussa         Expires 13 March 2026                [Page 15]
 
-Internet-Draft                 AI-Internet                     July 2025
+Internet-Draft                 AI-Internet                September 2025
 
 
    In traditional data discovery, clients search for and retrieve
@@ -893,9 +893,9 @@ Internet-Draft                 AI-Internet                     July 2025
 
 
 
-Akhavain & Moussa        Expires 23 January 2026               [Page 16]
+Akhavain & Moussa         Expires 13 March 2026                [Page 16]
 
-Internet-Draft                 AI-Internet                     July 2025
+Internet-Draft                 AI-Internet                September 2025
 
 
       based infrastructure, routing the query across these distinct
@@ -949,9 +949,9 @@ Internet-Draft                 AI-Internet                     July 2025
 
 
 
-Akhavain & Moussa        Expires 23 January 2026               [Page 17]
+Akhavain & Moussa         Expires 13 March 2026                [Page 17]
 
-Internet-Draft                 AI-Internet                     July 2025
+Internet-Draft                 AI-Internet                September 2025
 
 
    *  Inference Chaining: In this model, the output of one model serves
@@ -1005,9 +1005,9 @@ Internet-Draft                 AI-Internet                     July 2025
 
 
 
-Akhavain & Moussa        Expires 23 January 2026               [Page 18]
+Akhavain & Moussa         Expires 13 March 2026                [Page 18]
 
-Internet-Draft                 AI-Internet                     July 2025
+Internet-Draft                 AI-Internet                September 2025
 
 
 3.1.5.  Compute and Resource Management
@@ -1061,9 +1061,9 @@ Internet-Draft                 AI-Internet                     July 2025
 
 
 
-Akhavain & Moussa        Expires 23 January 2026               [Page 19]
+Akhavain & Moussa         Expires 13 March 2026                [Page 19]
 
-Internet-Draft                 AI-Internet                     July 2025
+Internet-Draft                 AI-Internet                September 2025
 
 
    *  How do we ensure that workload distribution is fair across
@@ -1117,9 +1117,9 @@ Internet-Draft                 AI-Internet                     July 2025
 
 
 
-Akhavain & Moussa        Expires 23 January 2026               [Page 20]
+Akhavain & Moussa         Expires 13 March 2026                [Page 20]
 
-Internet-Draft                 AI-Internet                     July 2025
+Internet-Draft                 AI-Internet                September 2025
 
 
 3.1.9.  Charging and Billing
@@ -1155,34 +1155,347 @@ Internet-Draft                 AI-Internet                     July 2025
    based enforcement, especially in scenarios involving cross-
    organizational or cross-network cooperation.
 
-4.  Data Aware Inference and Training Network (DA-ITN): General
-    Framework
+4.  Data and Agent Aware Inference and Training Network (DA-ITN):
+    General Framework
 
    The DA-ITN is envisioned as a multi-domain, multi-technology network
    operating at the AI layer, designed to address the various layers of
-   complexity inherent in modern AI ecosystems.  It aims to support a
-   wide range of requirements across AI training, inference, and agent-
-   to-agent interaction, as previously outlined.  To manage these
-   complexities and cater for the requirements, we propose structuring
-   the DA-ITN around four core components: a Control Plane (CP), a Data
-   Plane (DP), an Operations and Management (OAM) Plane, and an
-   Intelligence Layer.  It is important to note that the DA-ITN is
-   agnostic to the underlying communication infrastructure, allowing it
-   to operate seamlessly over heterogeneous networks, whether mobile,
-   wireline, or satellite-based. he DA-ITN integrates with these
+   complexity inherent in modern AI ecosystems.  As mentioned earlier,
+   the network aims to support a wide range of requirements, some of
+   which are outlined above, across AI training, inference, and agent-
+   to-agent interaction.
+
+   The network consists of set of nodes and equipment connected via one
+   or more traditional underlay networks as depicted below.
 
 
 
-Akhavain & Moussa        Expires 23 January 2026               [Page 21]
+
+
+
+Akhavain & Moussa         Expires 13 March 2026                [Page 21]
 
-Internet-Draft                 AI-Internet                     July 2025
+Internet-Draft                 AI-Internet                September 2025
 
 
-   underlying infrastructures through any available means, embedding its
-   control and intelligence capabilities to coordinate and manage AI-
-   specific services in a flexible and scalable manner.
++---------------------------------------------+
+| DA-ITN nodal view                           |
+|                                             |
+|  +----------------+     +----------------+  |    DA-ITN node types
+|  | DA-ITN Node (A)|<--->| DA-ITN Node (B)|  |      A- Data node
+|  +----------------+  |  +----------------+  |      B- Compute node
+|                      |                      |      C- Storage node
+|                      |                      |      D- Model node
+|  +----------------+  |  +----------------+  |      E- Evaluation node
+|  | DA-ITN Node (E)|<--->| DA-ITN Node (G)|  |      F- Agent node
+|  +----------------+  |  +----------------+  |      G- Multi-purpose node
+|                      |                      |
+|                      |                      |
+|  +----------------+  |  +----------------+  |
+|  | DA-ITN Node (F)|<--->|DA-ITN Node(C+D)|  |
+|  +----------------+     +----------------+  |
+|                                             |
++---------------------------------------------+
 
-4.1.  Control plane and Intelligence Layer
+                Figure 1: Figure 1: DA-ITN nodal view
+
+   Nodes with DA-ITN along with its core functionality interact together
+   to provide different training, inference, and agentic services.  In
+   this manner, DA-ITN can be divided into four interacting major
+   building blocks as shown bellow.
+
+           +--------------------+         +--------------------+
+           |   DA-ITN Service   |         |   DA-ITN Client    |
+           | Provider Community |         |     Community      |
+           +--------------------+         +--------------------+
+               ↑     ↑                               ↑     ↑
+               |     |                               |     |
+               |     |                               |     |
+               |     +-------------------------------+     |
+               |                     |                     |
+               |                     |                     |
+               |                     ↓                     |
+               |           +--------------------+          |
+               |           |     DA-ITN Core    |          |
+               |           |                    |          |
+               |           +--------------------+          |
+               |                     ↑                     |
+               |                     |                     |
+               |                     |                     |
+               ↓                     ↓                     ↓
+           +---------------------------------------------------+
+           |                    DA-ITN Enablers                |
+           +---------------------------------------------------+
+
+
+
+Akhavain & Moussa         Expires 13 March 2026                [Page 22]
+
+Internet-Draft                 AI-Internet                September 2025
+
+
+      Figure 2: Figure 2: DA-ITN high level architecture and building
+                                   blocks
+
+4.1.  DA-ITN Core
+
+   This block contains DA-ITN main internal modules, functions, and
+   services.  Dedicated logical planes in this block handle interactions
+   between its different modules and functions.  Interactions between
+   different modules and functions in this block are not visible or
+   accessible to entities in other blocks.  DA-ITN core offers its
+   services to external entities via clear and well defined interfaces
+   and protocols.  The following illustrates different modules and
+   functions of DA-ITN core block.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Akhavain & Moussa         Expires 13 March 2026                [Page 23]
+
+Internet-Draft                 AI-Internet                September 2025
+
+
++-----------------------------------+
+|            DA-ITN Core            |
+|                                   |
+|   +----------+ +--------------+   |
+|   | X-RCE    | |Registration &|   |     X-RCE:  Training, model, query, etc.
+|   |          | |Authentication|   |             route compute engine
+|   +----------+ +--------------+   |     XOD:    Model, agent deployment
+|   +----------+ +--------------+   |             optimizer
+|   | X-DO     | |Discovery &   |   |     S-FAM:  Different Service feasibility
+|   |          | |Advertisement |   |             assessment module
+|   +----------+ +--------------+   |     TAG:    Training algorithm generator
+|   +----------+ +--------------+   |     PVM:    Performance verification
+|   | S-FAM    | |Billing &     |   |             Module
+|   |          | |Accounting    |   |     DDRT:   Data dynamics and resource
+|   +----------+ +--------------+   |             topology
+|   +----------+ +--------------+   |
+|   | TAG      | |Reputation &  |   |
+|   |          | |Trust Mgmt.   |   |
+|   +----------+ +--------------+   |
+|   +----------+ +--------------+   |
+|   | PVM      | | Upgrade Mgmt.|   |
+|   |          | |              |   |
+|   +----------+ +--------------+   |
+|   +----------+ +--------------+   |
+|   | Resource | |Mobility Mgmt.|   |
+|   | Mgmt.    | |              |   |
+|   +----------+ +--------------+   |
+|   +----------+ +--------------+   |
+|   |   DDRT   | | Tools Mgmt.  |   |
+|   |          | |     ???      |   |
+|   +----------+ +--------------+   |
+|            +---------+            |
+|            |   OAM   |            |
+|            +---------+            |
++-----------------------------------+
+
+    Figure 3: Figure 3: DA-ITN core and its different modules and
+                               function
+
+4.2.  DA-ITN Service Provider Community
+
+   Providers for different services such as data, model, agent, and
+   resource providers reside within the Service Provider Community block
+   of the DA-ITN.  Service providers join the network via a registration
+   and authentication process offered by DA-ITN core.  The service
+   providers use DA-ITN to advertise their services, capabilities, etc.
+   across the overall network.  They can also register for notifications
+   to get updates e.g. arrival of new models, training data, agents,
+
+
+
+Akhavain & Moussa         Expires 13 March 2026                [Page 24]
+
+Internet-Draft                 AI-Internet                September 2025
+
+
+   etc.  DA-ITN dispenses revenue to providers for the services rendered
+   via its billing and accounting module.
+
+   The following figure shows different modules of DA-ITN service
+   provider community.
+
+                     +-------------------------------+
+                     |       DA-ITN Service          |
+                     |     Provider Community        |
+                     |                               |
+                     |  +----------+ +----------+    |
+                     |  | Data     | | Model    |    |
+                     |  | providers| | providers|    |
+                     |  +----------+ +----------+    |
+                     |  +----------+ +----------+    |
+                     |  | Agent    | | Resource |    |
+                     |  | providers| | providers|    |
+                     |  +----------+ +----------+    |
+                     |  +--------------+             |
+                     |  | Tools        |             |
+                     |  | providers ???|             |
+                     |  +--------------+             |
+                     +-------------------------------+
+
+           Figure 4: Figure 4: DA-ITN Service Provider Community
+
+   The tool module within the provider block requires further
+   investigation and analysis.  Agentic protocols such as Model Context
+   Protocol(MCP) provide access to MCP tools from the agent interaction
+   point of view.  Whether DA-ITN needs to support additional
+   capabilities w.r.t agents or whether it needs to support distinct
+   tools w.r.t training and inference is an open question for now.  Will
+   there be a need for unified tools' protocols that fits all utilities,
+   or a protocol per utility?
+
+4.3.  DA-ITN Client Community
+
+   This block represents the client side of DA-ITN.  The clients are
+   network participants requiring training, inference, agent-to-agent
+   interactions, and those who need access to resources such as storage,
+   compute, etc. offered by resource providers in DA-ITN.
+
+   DA-ITN enables clients to discover potential providers by tuning into
+   DA-ITN discovery, and advertisement module, allowing them to select
+   the best match based on their requirements.  Alternatively, clients
+   may delegate the matching process to DA-ITN, requesting DA-ITN to
+   identify the most suitable provider based on their criteria.  For
+   example, a client using the model training service may opt to fully
+
+
+
+Akhavain & Moussa         Expires 13 March 2026                [Page 25]
+
+Internet-Draft                 AI-Internet                September 2025
+
+
+   control the training process and make all decisions independently.
+   Alternatively, the client can delegate the training responsibilities
+   to the DA-ITN core.  In the case of delegation, modules such as
+   X-RCE, DDRT, PVM, S-FAM, and TAG can work collaboratively to train
+   the model on the client’s behalf and deliver the finalized, trained
+   model back to them.
+
+                     +-------------------------------+
+                     |       DA-ITN Client           |
+                     |         Community             |
+                     |                               |
+                     |  +----------+ +----------+    |
+                     |  | Data     | | Model    |    |
+                     |  | clients  | | clients  |    |
+                     |  +----------+ +----------+    |
+                     |  +----------+ +----------+    |
+                     |  | Agent    | | Resource |    |
+                     |  | clients  | | clients  |    |
+                     |  +----------+ +----------+    |
+                     |  +--------------+             |
+                     |  | Tools        |             |
+                     |  | Clients   ???|             |
+                     |  +--------------+             |
+                     +-------------------------------+
+
+                Figure 5: Figure 5: DA-ITN Client Community
+
+   It must be noted that a node/entity in DA-ITN can act both as
+   provider and/or a client.  For example, a node providing data as its
+   service, might need access to a resource provider service.  Or a
+   model provider enabling inference might employ the services of data
+   providers for Retrieval-Augmented Generation (RAG).
+
+   Similar to the provider community block in DA-ITN, the tools module
+   withing the client community requires further study.
+
+4.4.  DA-ITN Enablers
+
+   This layer represents external and underlying services that DA-ITN
+   itself employs to accomplish its different tasks.  Various networking
+   layers, access technologies, location, and sensing functions are
+   examples of such services.
+
+
+
+
+
+
+
+
+
+Akhavain & Moussa         Expires 13 March 2026                [Page 26]
+
+Internet-Draft                 AI-Internet                September 2025
+
+
++-------------------------------------------------------------------------+
+|                             DA-ITN Enablers                             |
+|                                                                         |
+|  +---------------------------+  +-----------+  +-----------+            |
+|  | Communications/Networking |  | Location  |  |  Sensing  |            |
+|  |                           |  |           |  |           |            |
+|  | +---------+  +----------+ |  | +-------+ |  | +-------+ |            |
+|  | | Mobile  |  | Internet | |  | | GPS   | |  | | IoT   | |            |
+|  | | network |  +----------+ |  | +-------+ |  | +-------+ |            |
+|  | +---------+  +----------+ |  | +-------+ |  | +-------+ |            |
+|  | | NTN     |  | WiFi     | |  | |Sensors| |  | | ISAC  | |  Others??? |
+|  | +---------+  +----------+ |  | +-------+ |  | +-------+ |            |
+|  | +-----------------------+ |  | +-------+ |  | +-------+ |            |
+|  | |        Others?        | |  | |Mobile | |  | |Others?| |            |
+|  | +-----------------------+ |  | |network| |  | +-------+ |            |
+|  |                           |  | +-------+ |  |           |            |
+|  |                           |  | +-------+ |  |           |            |
+|  |                           |  | |Others?| |  |           |            |
+|  |                           |  | +-------+ |  |           |            |
+|  +---------------------------+  +-----------+  +-----------+            |
++-------------------------------------------------------------------------+
+
+                 Figure 6: Figure 6: DA-ITN Enablers
+
+5.  DA-ITN high level architecture
+
+   To manage these complexities and cater for the requirements, we
+   propose structuring the DA-ITN around four core components: a Control
+   Plane (CP), a Data Plane (DP), an Operations and Management (OAM)
+   Plane, and an Intelligence Layer.  It is important to note that the
+   DA-ITN is agnostic to the underlying communication infrastructure,
+   allowing it to operate seamlessly over heterogeneous networks,
+   whether mobile, wire-line, or satellite-based. he DA-ITN integrates
+   with these underlying infrastructures through any available means,
+   embedding its control and intelligence capabilities to coordinate and
+   manage AI-specific services in a flexible and scalable manner.
+
+5.1.  Control plane and Intelligence Layer
 
    The Control Plane and Intelligence Layer work together to enable an
    efficient, reliable, and timely information collection
@@ -1193,6 +1506,14 @@ Internet-Draft                 AI-Internet                     July 2025
    data, models, and resources, essential components for enabling
    intelligent, context-aware decision-making within the AI ecosystem as
    has previously been highlighted.  Also, with the help of data,
+
+
+
+Akhavain & Moussa         Expires 13 March 2026                [Page 27]
+
+Internet-Draft                 AI-Internet                September 2025
+
+
    resource, and reachability topology engine (DRRT) housed within the
    intelligence layer, the gathered information and descriptors can be
    used to construct meaningful relationships across the ecosystem.
@@ -1224,16 +1545,6 @@ Internet-Draft                 AI-Internet                     July 2025
    contributors to the AI service chain are fairly compensated and
    protected.
 
-
-
-
-
-
-Akhavain & Moussa        Expires 23 January 2026               [Page 22]
-
-Internet-Draft                 AI-Internet                     July 2025
-
-
    It is worth noting that the DA-ITN’s Control Plane is not constrained
    by specific protocol stacks.  Instead, it provides a flexible
    connectivity and coordination infrastructure upon which various AI-
@@ -1247,21 +1558,45 @@ Internet-Draft                 AI-Internet                     July 2025
    modes of operation, offering high adaptability across different
    deployment contexts.
 
-4.2.  Data Plane
+   It’s also important to clarify that the Intelligence Layer
+   encompasses all previously mentioned DA-ITN core functions, along
+   with any additional intelligence required to support the full range
+   of DA-ITN services.  The term “Intelligence Layer” is intentionally
+
+
+
+Akhavain & Moussa         Expires 13 March 2026                [Page 28]
+
+Internet-Draft                 AI-Internet                September 2025
+
+
+   broad to allow flexibility in its design and contents.  Nonetheless,
+   its role is clearly defined: it serves as a functional layer that
+   interfaces with other DA-ITN components through the control plane,
+   data plane, and OAM plane to fulfill its responsibilities.
+
+5.2.  Data Plane
 
    On the other hand, the Data Plane of the DA-ITN provides support for
    mobility management and intelligent scheduling, enabling the dynamic
-   creation of rendezvous points where data, queries, models, and
-   compute infrastructure can be brought together with minimal latency
-   and overhead.  Thanks to its infrastructure-agnostic nature, the DA-
-   ITN leverages existing communication networks—such as those offered
-   by 6G or edge service providers—as tools to enable model mobility,
-   data mobility, and agent-to-agent coordination.  This capability is
-   essential for supporting scenarios where mobility or geographical
-   dispersion of resources would otherwise lead to performance
-   degradation or inefficiency.
+   creation of rendezvous points where data, queries, models, agents,
+   and compute infrastructure can be brought together with minimal
+   latency and overhead.  Thanks to its infrastructure-agnostic nature,
+   the DA-ITN leverages existing communication networks—such as those
+   offered by 6G or edge service providers—as tools to enable model
+   mobility, data mobility, and agent-to-agent coordination.  This
+   capability is essential for supporting scenarios where mobility or
+   geographical dispersion of resources would otherwise lead to
+   performance degradation or inefficiency.
 
-4.3.  Operation and Management Plane (OAM)
+   The construction of the Data Plane may fall under the responsibility
+   of the DA-ITN core or Intelligence Layer, which would orchestrate the
+   necessary resources from the DA-ITN Enabler block to build the
+   required structure.  Alternatively, the Enabler block itself may
+   possess sufficient intelligence to autonomously construct the Data
+   Plane as needed.
+
+5.3.  Operation and Management Plane (OAM)
 
    Finally, the Operations and Management (OAM) layer plays a critical
    role in supporting the day-to-day operational needs of the AI
@@ -1285,9 +1620,10 @@ Internet-Draft                 AI-Internet                     July 2025
 
 
 
-Akhavain & Moussa        Expires 23 January 2026               [Page 23]
+
+Akhavain & Moussa         Expires 13 March 2026                [Page 29]
 
-Internet-Draft                 AI-Internet                     July 2025
+Internet-Draft                 AI-Internet                September 2025
 
 
    Moreover, the OAM layer enables interactive control.  Clients can use
@@ -1306,14 +1642,15 @@ Internet-Draft                 AI-Internet                     July 2025
    enforcement.
 
    Beyond individual model control, the OAM layer also facilitates
-   system-wide coordination and policy administration—ensuring
-   compliance with service-level agreements (SLAs), enforcing data
-   governance policies, and managing access rights across domains.  It
-   plays a foundational role in building trustworthy, maintainable, and
-   operationally efficient AI services across diverse infrastructure
+   system-wide coordination and policy administration.  OAM in
+   coordination with a potential policy enforcement module man help
+   ensuring compliance with service-level agreements (SLAs), enforcing
+   data governance policies, and managing access rights across domains.
+   It plays a foundational role in building trustworthy, maintainable,
+   and operationally efficient AI services across diverse infrastructure
    providers and stakeholders.
 
-4.4.  Summary of the DA-ITN General Framework
+5.4.  Summary of the DA-ITN General Framework
 
    Accordingly, the DA-ITN is well positioned and designed to provide a
    range of intelligent services that can be leveraged by both AI
@@ -1330,21 +1667,30 @@ Internet-Draft                 AI-Internet                     July 2025
    specific DA-ITN components that support training and inference
    services.
 
-5.  DA-ITN for Training
+
+
+
+
+
+
+
+
+
+
+Akhavain & Moussa         Expires 13 March 2026                [Page 30]
+
+Internet-Draft                 AI-Internet                September 2025
+
+
+6.  DA-ITN for Training
 
    The training architecture of the DA-ITN consists of five layers: i)
-   the terminal layer; ii) the network layer; iii) the data, resource,
-   and reachability topology layer (DRRT); iv) the DA-ITN intelligence
-   layer; and v) the OAM layer.  The layers interact together using
+   the terminal layer (DA-ITN provider and client communities); ii) the
+   network layer (Enablers); iii) the data, resource, and reachability
+   topology layer (DRRT); iv) the DA-ITN intelligence layer (DA-ITN
+   core); and v) the OAM layer.  The layers interact together using
    control and data planes (CP and DP respectively) as is discussed in
    the following.
-
-
-
-Akhavain & Moussa        Expires 23 January 2026               [Page 24]
-
-Internet-Draft                 AI-Internet                     July 2025
-
 
    First, the network layer, which is at the heart of the DA-ITN
    training system, is responsible for providing connectivity services
@@ -1355,52 +1701,24 @@ Internet-Draft                 AI-Internet                     July 2025
    enables the overarching OMA layer by enabling a multi-layer
    connectivity structure.
 
-   Second, the terminal layer, the lowest layer in the architecture,
-   contains the terminal components of the system.  These include nodes
-   that host the training data, facilities that provide computing
-   resources where the model can be trained, and newly proposed
-   components that we refer to as the model performance verification
-   units (MPVUs), where the model testing phase takes place.  It should
-   be noted that facilities providing computing resources come in
-   various forms including private property such as personal devices, in
-   a distributed form such as in the case of mobile edge computing in 6G
-   networks, on the cloud such as on the AWS cloud, or anywhere that is
-   accessible by both the data and the model and holds sufficient
-   compute for training.  As for the MPVU, this unit is important when
-   conducting distributed training as it takes the role of a trusted
-   proxy node that holds a globally constructed testing dataset - the
-   dataset is constructed via collecting sample datasets from each
-   participating node - and provides safe and secure access to it.
-   Last, the terminal layer also hosts the AI training clients.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Akhavain & Moussa        Expires 23 January 2026               [Page 25]
-
-Internet-Draft                 AI-Internet                     July 2025
-
+   Second, the terminal layer from the point of view of training, is the
+   lowest layer in the architecture, and it contains the terminal
+   components of the system.  These include nodes that host the training
+   data, facilities that provide computing resources where the model can
+   be trained, and newly proposed components that we refer to as the
+   model performance verification modules (MPVMs), where the model
+   testing phase takes place.  It should be noted that facilities
+   providing computing resources come in various forms including private
+   property such as personal devices, in a distributed form such as in
+   the case of mobile edge computing in 6G networks, on the cloud such
+   as on the AWS cloud, or anywhere that is accessible by both the data
+   and the model and holds sufficient compute for training.  As for the
+   MPVU, this unit is important when conducting distributed training as
+   it takes the role of a trusted proxy node that holds a globally
+   constructed testing dataset - the dataset is constructed via
+   collecting sample datasets from each participating node - and
+   provides safe and secure access to it.  Last, the terminal layer also
+   hosts the AI training clients.
 
    The terminal layer relies on the network layer to build an
    overarching knowledge-sharing network.  To be exact, the network
@@ -1412,6 +1730,14 @@ Internet-Draft                 AI-Internet                     July 2025
    to submit their models, monitor the training progress, modify
    training requirements, and collect the trained models.  Control and
    data traffic exist for each one of these services.  For instance,
+
+
+
+Akhavain & Moussa         Expires 13 March 2026                [Page 31]
+
+Internet-Draft                 AI-Internet                September 2025
+
+
    moving a model toward a compute facility requires authorization for
    the utility of the resources; hence, authorization control data is
    required to be exchanged over the Terminal-NET CP links.  The service
@@ -1450,14 +1776,6 @@ Internet-Draft                 AI-Internet                     July 2025
    required information.  For instance, the DRRT-M may instruct the 3GPP
    component of the network layer to convey connectivity information
    about the data nodes, or it might instruct it to wake up an ideal
-
-
-
-Akhavain & Moussa        Expires 23 January 2026               [Page 26]
-
-Internet-Draft                 AI-Internet                     July 2025
-
-
    data provider device.  It might also instruct satellites to share GPS
    locations of mobile data nodes.  The collected data by the network
    layer are then shipped toward the G-DRRT component of the DRRT layer
@@ -1468,6 +1786,14 @@ Internet-Draft                 AI-Internet                     July 2025
    Fourth, The Intelligence Layer is responsible for hosting the
    decision-making logic required to fulfill the specific training
    requirements submitted by clients.  It contains several key
+
+
+
+Akhavain & Moussa         Expires 13 March 2026                [Page 32]
+
+Internet-Draft                 AI-Internet                September 2025
+
+
    components that collaboratively determine how, where, and whether
    training should proceed.  Among these is the Model Training Route
    Compute Engine (MTRCE), which identifies suitable rendezvous points
@@ -1505,15 +1831,6 @@ Internet-Draft                 AI-Internet                     July 2025
    reduce computational overhead and accelerate decision-making for
    individual training requests.
 
-
-
-
-
-Akhavain & Moussa        Expires 23 January 2026               [Page 27]
-
-Internet-Draft                 AI-Internet                     July 2025
-
-
    Last, the OAM layer, which spans all the layers, is mainly intended
    as a management layer to configure the training components, the
    connectivity of the network layer, and enable feedback functions
@@ -1521,7 +1838,19 @@ Internet-Draft                 AI-Internet                     July 2025
    tracking.  It is also intended to provide feedback to the clients
    about their submitted models every step of the way.
 
-6.  DA-ITN for Inference
+
+
+
+
+
+
+
+Akhavain & Moussa         Expires 13 March 2026                [Page 33]
+
+Internet-Draft                 AI-Internet                September 2025
+
+
+7.  DA-ITN for Inference
 
    The Inference architecture of the DA-ITN provides automated AI
    inference services using a similar structure to the training
@@ -1540,10 +1869,10 @@ Internet-Draft                 AI-Internet                     July 2025
    into two types.  The first type consists of model hosts - the model
    used for inference does not have to be owned by them, but it is
    hosted on their computing facilities.  The second type consists of
-   model providers - they develop models and deploy them either at their
-   own facilities or at model hosts.  Model owners are represented in
-   the terminal layer as model deployment facility providers (MDFP)
-   which are distributed across the global network.
+   model/agent providers - they develop models/agents and deploy them
+   either at their own facilities or at model hosts.  Model owners are
+   represented in the terminal layer as model deployment facility
+   providers (MDFP) which are distributed across the global network.
 
    Third, the network layer provides the following services to the
    terminal layer using its control and data planes: i) model mobility
@@ -1562,14 +1891,6 @@ Internet-Draft                 AI-Internet                     July 2025
    models and queries such as i) for models: model locations, model
    capabilities, current loading conditions, inference speed, inference
    accuracy, model reachability and accessibility (i.e., reachability
-
-
-
-Akhavain & Moussa        Expires 23 January 2026               [Page 28]
-
-Internet-Draft                 AI-Internet                     July 2025
-
-
    and accessibility of the MDFP), and ii) for query: query patterns and
    dynamics (could be associated with a geographical location), query
    types, and reachability status of query owners for response
@@ -1577,6 +1898,14 @@ Internet-Draft                 AI-Internet                     July 2025
    used to make appropriate decisions about model deployment and
    distribution strategies, query-to-model routing decisions, and
    response routing decisions.  The QRRT has a management function that
+
+
+
+Akhavain & Moussa         Expires 13 March 2026                [Page 34]
+
+Internet-Draft                 AI-Internet                September 2025
+
+
    coordinates with the Network layer to collect the required
    information from the terminal layer to build the Global-QRRT
    (G-QRRT).  It also optionally communicates with the QRRT-adaptation
@@ -1601,7 +1930,7 @@ Internet-Draft                 AI-Internet                     July 2025
    location optimization, aiming to minimize query response time and
    cost for inference.
 
-7.  DA-ITN-Facilitation Agentic Networks
+8.  DA-ITN-Facilitation Agentic Networks
 
    While agent-to-agent interaction is commonly associated with task-
    oriented collaboration—often relying on inference chaining as
@@ -1618,19 +1947,20 @@ Internet-Draft                 AI-Internet                     July 2025
    and task-based collaboration.  In task-based collaboration, agents
    exchange data or partial inferences related to the execution of a
    specific, external objective—such as processing a query or generating
-
-
-
-Akhavain & Moussa        Expires 23 January 2026               [Page 29]
-
-Internet-Draft                 AI-Internet                     July 2025
-
-
    an output.  Their internal models remain unchanged; they simply
    contribute to a shared computational goal.  In contrast,
    collaborative training focuses on internal evolution: the goal is not
    to solve an external task, but to enhance the capabilities of the
    participating agents themselves.
+
+
+
+
+
+Akhavain & Moussa         Expires 13 March 2026                [Page 35]
+
+Internet-Draft                 AI-Internet                September 2025
+
 
    In a collaborative training setup, agents may exchange model
    parameters, training datasets, or knowledge representations.  They
@@ -1660,29 +1990,16 @@ Internet-Draft                 AI-Internet                     July 2025
    discovery, descriptor sharing, trust enforcement, dynamic rendezvous,
    and topology management.
 
-8.  Security Considerations
+9.  Security Considerations
 
    Security considerations are as outlined within the document under the
    privacy and security requirements
 
-9.  IANA Considerations
+10.  IANA Considerations
 
    This document has no IANA actions.
 
-
-
-
-
-
-
-
-
-Akhavain & Moussa        Expires 23 January 2026               [Page 30]
-
-Internet-Draft                 AI-Internet                     July 2025
-
-
-10.  Conclusions
+11.  Conclusions
 
    As AI continues to evolve and integrate into every facet of modern
    life, it becomes increasingly clear that the supporting
@@ -1690,6 +2007,16 @@ Internet-Draft                 AI-Internet                     July 2025
    processes—central to the success of AI—are no longer simple, isolated
    tasks; they are complex, distributed, and require intelligent
    coordination across data, compute, and communication domains.
+
+
+
+
+
+
+Akhavain & Moussa         Expires 13 March 2026                [Page 36]
+
+Internet-Draft                 AI-Internet                September 2025
+
 
    The DA-ITN architecture offers a forward-looking response to this
    complexity by providing a cohesive, scalable, and intelligent network
@@ -1730,14 +2057,6 @@ Authors' Addresses
 
    Hesham Moussa
    Huawei Canada
-
-
-
-Akhavain & Moussa        Expires 23 January 2026               [Page 31]
-
-Internet-Draft                 AI-Internet                     July 2025
-
-
    Email: hesham.moussa@huawei.com
 
 
@@ -1750,43 +2069,4 @@ Internet-Draft                 AI-Internet                     July 2025
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Akhavain & Moussa        Expires 23 January 2026               [Page 32]
+Akhavain & Moussa         Expires 13 March 2026                [Page 37]
