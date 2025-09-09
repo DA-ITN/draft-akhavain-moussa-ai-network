@@ -9,8 +9,8 @@ number:
 date:
 consensus: true
 v: 3
-area: AREA
-workgroup: "Network Working Group"
+area: Internet
+workgroup: "Internet Area Working Group"
 keyword:
  - AI Network
  - Agentic Networks
@@ -65,7 +65,7 @@ However, it is crucial to recognize that the success of AI systems relies on two
 
 As such, aspects such as data management, computational resources, connectivity, security, privacy, trust, billing, and rigorous testing are all crucial when handling AI systems. Thus, it is important to clearly understand the requirements of the AI systems from both the training and inference prospective as both of these pillars constitute an entangled framework and cannot be tackled in isolation.
 
-In this document, we present a vision of an ecosystem, especially designed to satisfy the requirements of AI from training and inference points of view. We propose a unified, intelligent network architecture—the Data Aware-Inference and Training Network (DA-ITN). This ecosystem is envisioned as a comprehensive, multi-plane network with dedicated control, data, and operations & management (OAM) planes. It is designed to interconnect all relevant stakeholders, including clients, AI service providers, data providers, and third-party facilitators. Its core objective is to provide the infrastructure and coordination necessary to support an ecosystem for enabling AI of the future at scale.
+In this document, we present a vision of an ecosystem, especially designed to satisfy the requirements of AI from training and inference points of view. We propose a unified, intelligent network architecture—the Data and Agent aware-Inference and Training Network (DA-ITN). This ecosystem is envisioned as a comprehensive, multi-plane network with dedicated control, data, and operations & management (OAM) planes. It is designed to interconnect all relevant stakeholders, including clients, AI service providers, data providers, and third-party facilitators. Its core objective is to provide the infrastructure and coordination necessary to support an ecosystem for enabling AI of the future at scale.
 
 This document aims to introduce the DA-ITN vision and establish a compelling case for its central role in enabling a new generation of AI-native networks, i.e., AI internet. These networks will be optimized not only for learning and inference but also for seamless collaboration, interaction, and communication among AI agents.
 To that end, we begin by outlining the specific requirements of AI from both the training and inference standpoints. We then introduce the core components of the DA-ITN and illustrate how they collectively meet these requirements. Finally, this network is positioned as an ecosystem for agent-to-agent collaborations, interactions, and communications.
@@ -345,13 +345,203 @@ Several open questions arise in this context:
 Developing fair, transparent, and scalable billing mechanisms is critical to fostering collaboration across stakeholders and sustaining the economic viability of distributed AI training ecosystems. These challenges call for further research into incentive structures, dynamic pricing models, and smart contract-based enforcement, especially in scenarios involving cross-organizational or cross-network cooperation.
 
 
-# Data Aware Inference and Training Network (DA-ITN): General Framework
+# Data and Agent Aware Inference and Training Network (DA-ITN): General Framework
 
-The DA-ITN is envisioned as a multi-domain, multi-technology network operating at the AI layer, designed to address the various layers of complexity inherent in modern AI ecosystems. It aims to support a wide range of requirements across AI training, inference, and agent-to-agent interaction, as previously outlined. To manage these complexities and cater for the requirements, we propose structuring the DA-ITN around four core components: a Control Plane (CP), a Data Plane (DP), an Operations and Management (OAM) Plane, and an Intelligence Layer. It is important to note that the DA-ITN is agnostic to the underlying communication infrastructure, allowing it to operate seamlessly over heterogeneous networks, whether mobile, wireline, or satellite-based. he DA-ITN integrates with these underlying infrastructures through any available means, embedding its control and intelligence capabilities to coordinate and manage AI-specific services in a flexible and scalable manner.
+The DA-ITN is envisioned as a multi-domain, multi-technology network operating at the AI layer, designed to address the various layers of complexity inherent in modern AI ecosystems. As mentioned earlier, the network aims to support a wide range of requirements, some of which are outlined above, across AI training, inference, and agent-to-agent interaction. 
+
+The network consists of set of nodes and equipment connected via one or more traditional underlay networks as depicted below.
+
+~~~~
++---------------------------------------------+
+| DA-ITN nodal view                           |
+|                                             |
+|  +----------------+     +----------------+  |    DA-ITN node types
+|  | DA-ITN Node (A)|<--->| DA-ITN Node (B)|  |      A- Data node
+|  +----------------+  |  +----------------+  |      B- Compute node
+|                      |                      |      C- Storage node
+|                      |                      |      D- Model node
+|  +----------------+  |  +----------------+  |      E- Evaluation node
+|  | DA-ITN Node (E)|<--->| DA-ITN Node (G)|  |      F- Agent node
+|  +----------------+  |  +----------------+  |      G- Multi-purpose node
+|                      |                      |
+|                      |                      |
+|  +----------------+  |  +----------------+  |
+|  | DA-ITN Node (F)|<--->|DA-ITN Node(C+D)|  |
+|  +----------------+     +----------------+  |
+|                                             |
++---------------------------------------------+
+~~~~
+{: #fig1 title="Figure 1: DA-ITN nodal view" artwork-align="center"}
+
+Nodes with DA-ITN along with its core functionality interact together to provide different training, inference, and agentic services. In this manner, DA-ITN can be divided into four interacting major building blocks as shown bellow.
+
+~~~~
++--------------------+         +--------------------+ 
+|   DA-ITN Service   |         |   DA-ITN Client    |
+| Provider Community |         |     Community      |
++--------------------+         +--------------------+
+    ↑     ↑                               ↑     ↑
+    |     |                               |     |
+    |     |                               |     |
+    |     +-------------------------------+     |
+    |                     |                     |
+    |                     |                     |
+    |                     ↓                     |
+    |           +--------------------+          |
+    |           |     DA-ITN Core    |          |
+    |           |                    |          |
+    |           +--------------------+          |
+    |                     ↑                     |
+    |                     |                     |
+    |                     |                     |
+    ↓                     ↓                     ↓
++---------------------------------------------------+
+|                    DA-ITN Enablers                |
++---------------------------------------------------+
+~~~~
+{: #fig2 title="Figure 2: DA-ITN high level architecture and building blocks" artwork-align="center"}
+
+
+## DA-ITN Core
+This block contains DA-ITN main internal modules, functions, and services. Dedicated logical
+planes in this block handle interactions between its different modules and functions. Interactions between different modules and functions in this block are not visible or accessible to entities in other blocks. DA-ITN core offers its services to external entities via clear and well defined interfaces and protocols. The following illustrates different modules and functions of DA-ITN core block.
+
+~~~~
++-----------------------------------+
+|            DA-ITN Core            |
+|                                   |
+|   +----------+ +--------------+   |
+|   | X-RCE    | |Registration &|   |     X-RCE:  Training, model, query, etc.
+|   |          | |Authentication|   |             route compute engine
+|   +----------+ +--------------+   |     XOD:    Model, agent deployment  
+|   +----------+ +--------------+   |             optimizer
+|   | X-DO     | |Discovery &   |   |     S-FAM:  Different Service feasibility
+|   |          | |Advertisement |   |             assessment module
+|   +----------+ +--------------+   |     TAG:    Training algorithm generator
+|   +----------+ +--------------+   |     PVM:    Performance verification
+|   | S-FAM    | |Billing &     |   |             Module 
+|   |          | |Accounting    |   |     DDRT:   Data dynamics and resource
+|   +----------+ +--------------+   |             topology
+|   +----------+ +--------------+   |
+|   | TAG      | |Reputation &  |   |
+|   |          | |Trust Mgmt.   |   |
+|   +----------+ +--------------+   |
+|   +----------+ +--------------+   |
+|   | PVM      | | Upgrade Mgmt.|   |
+|   |          | |              |   |
+|   +----------+ +--------------+   |
+|   +----------+ +--------------+   |
+|   | Resource | |Mobility Mgmt.|   |
+|   | Mgmt.    | |              |   |
+|   +----------+ +--------------+   |
+|   +----------+ +--------------+   |
+|   |   DDRT   | | Tools Mgmt.  |   |
+|   |          | |     ???      |   |
+|   +----------+ +--------------+   |
+|            +---------+            |
+|            |   OAM   |            |
+|            +---------+            |
++-----------------------------------+
+~~~~
+{: #fig3 title="Figure 3: DA-ITN core and its different modules and function" artwork-align="center"}
+
+## DA-ITN Service Provider Community
+Providers for different services such as data, model, agent, and resource providers reside within the Service Provider Community block of the DA-ITN. Service providers join the network via a registration and authentication process offered by DA-ITN core. The service providers use DA-ITN to advertise their services, capabilities, etc. across the overall network. They can also register for notifications to get updates e.g. arrival of new models, training data, agents, etc. DA-ITN dispenses revenue to providers for the services rendered via its billing and accounting module.
+
+The following figure shows different modules of DA-ITN service provider community.
+
+~~~~
++-------------------------------+
+|       DA-ITN Service          |
+|     Provider Community        |
+|                               |
+|  +----------+ +----------+    |
+|  | Data     | | Model    |    |
+|  | providers| | providers|    |
+|  +----------+ +----------+    |
+|  +----------+ +----------+    |
+|  | Agent    | | Resource |    |
+|  | providers| | providers|    |
+|  +----------+ +----------+    |
+|  +--------------+             |
+|  | Tools        |             |
+|  | providers ???|             |
+|  +--------------+             |
++-------------------------------+
+~~~~
+{: #fig4 title="Figure 4: DA-ITN Service Provider Community" artwork-align="center"}
+
+The tool module within the provider block requires further investigation and analysis. Agentic protocols such as Model Context Protocol(MCP) provide access to MCP tools from the agent interaction point of view. Whether DA-ITN needs to support additional capabilities w.r.t agents or whether it needs to support distinct tools w.r.t training and inference is an open question for now. Will there be a need for unified tools' protocols that fits all utilities, or a protocol per utility?
+
+
+
+## DA-ITN Client Community
+This block represents the client side of DA-ITN. The clients are network participants requiring training, inference, agent-to-agent interactions, and those who need access to resources such as storage, compute, etc. offered by resource providers in DA-ITN.
+
+DA-ITN enables clients to discover potential providers by tuning into DA-ITN discovery, and advertisement module, allowing them to select the best match based on their requirements. Alternatively, clients may delegate the matching process to DA-ITN, requesting DA-ITN to identify the most suitable provider based on their criteria. For example, a client using the model training service may opt to fully control the training process and make all decisions independently. Alternatively, the client can delegate the training responsibilities to the DA-ITN core. In the case of delegation, modules such as X-RCE, DDRT, PVM, S-FAM, and TAG can work collaboratively to train the model on the client’s behalf and deliver the finalized, trained model back to them. 
+
+~~~~
++-------------------------------+
+|       DA-ITN Client           |
+|         Community             |
+|                               |
+|  +----------+ +----------+    |
+|  | Data     | | Model    |    |
+|  | clients  | | clients  |    |
+|  +----------+ +----------+    |
+|  +----------+ +----------+    |
+|  | Agent    | | Resource |    |
+|  | clients  | | clients  |    |
+|  +----------+ +----------+    |
+|  +--------------+             |
+|  | Tools        |             |
+|  | Clients   ???|             |
+|  +--------------+             |
++-------------------------------+
+~~~~
+{: #fig5 title="Figure 5: DA-ITN Client Community" artwork-align="center"}
+
+It must be noted that a node/entity in DA-ITN can act both as provider and/or a client. For example, a node providing data as its service, might need access to a resource provider service. Or a model provider enabling inference might employ the services of data providers for Retrieval-Augmented Generation (RAG). 
+
+Similar to the provider community block in DA-ITN, the tools module withing the client community requires further study.
+
+
+## DA-ITN Enablers
+This layer represents external and underlying services that DA-ITN itself employs to accomplish its different tasks. Various networking layers, access technologies, location, and sensing functions are examples of such services. 
+
+~~~~
++-------------------------------------------------------------------------+
+|                             DA-ITN Enablers                             |
+|                                                                         |
+|  +---------------------------+  +-----------+  +-----------+            |
+|  | Communications/Networking |  | Location  |  |  Sensing  |            |
+|  |                           |  |           |  |           |            |
+|  | +---------+  +----------+ |  | +-------+ |  | +-------+ |            |
+|  | | Mobile  |  | Internet | |  | | GPS   | |  | | IoT   | |            |
+|  | | network |  +----------+ |  | +-------+ |  | +-------+ |            |
+|  | +---------+  +----------+ |  | +-------+ |  | +-------+ |            |
+|  | | NTN     |  | WiFi     | |  | |Sensors| |  | | ISAC  | |  Others??? |
+|  | +---------+  +----------+ |  | +-------+ |  | +-------+ |            |
+|  | +-----------------------+ |  | +-------+ |  | +-------+ |            |
+|  | |        Others?        | |  | |Mobile | |  | |Others?| |            |
+|  | +-----------------------+ |  | |network| |  | +-------+ |            |
+|  |                           |  | +-------+ |  |           |            |
+|  |                           |  | +-------+ |  |           |            |
+|  |                           |  | |Others?| |  |           |            |
+|  |                           |  | +-------+ |  |           |            |
+|  +---------------------------+  +-----------+  +-----------+            |
++-------------------------------------------------------------------------+
+~~~~
+{: #fig6 title="Figure 6: DA-ITN Enablers" artwork-align="center"}
+
+# DA-ITN high level architecture
+
+To manage these complexities and cater for the requirements, we propose structuring the DA-ITN around four core components: a Control Plane (CP), a Data Plane (DP), an Operations and Management (OAM) Plane, and an Intelligence Layer. It is important to note that the DA-ITN is agnostic to the underlying communication infrastructure, allowing it to operate seamlessly over heterogeneous networks, whether mobile, wire-line, or satellite-based. he DA-ITN integrates with these underlying infrastructures through any available means, embedding its control and intelligence capabilities to coordinate and manage AI-specific services in a flexible and scalable manner.
 
 ## Control plane and Intelligence Layer
 
-The Control Plane and Intelligence Layer work together to enable an efficient, reliable, and timely information collection infrastructure. They continuously gather up-to-date information on data availability, model status, agent conditions, resource utilization, and reachability across all participating entities. The collected information comes in the form of dynamic descriptors for data, models, and resources, essential components for enabling intelligent, context-aware decision-making within the AI ecosystem as has previously been highlighted. Also, with the help of data, resource, and reachability topology engine (DRRT) housed within the intelligence layer, the gathered information and descriptors can be used to construct meaningful relationships across the ecosystem. These are captured in the form of dynamic topologies or map-like structures, which help optimize decision-making processes across training, inference, and agent-to-agent collaboration tasks. This design provides a continuous awareness that is very essential for the success, reliability, accuracy, and responsiveness of the AI functionalities and services enabled by the DA-ITN within the AI ecosystem.  
+The Control Plane and Intelligence Layer work together to enable an efficient, reliable, and timely information collection infrastructure. They continuously gather up-to-date information on data availability, model status, agent conditions, resource utilization, and reachability across all participating entities. The collected information comes in the form of dynamic descriptors for data, models, and resources, essential components for enabling intelligent, context-aware decision-making within the AI ecosystem as has previously been highlighted. Also, with the help of data, resource, and reachability topology engine (DRRT) housed within the intelligence layer, the gathered information and descriptors can be used to construct meaningful relationships across the ecosystem. These are captured in the form of dynamic topologies or map-like structures, which help optimize decision-making processes across training, inference, and agent-to-agent collaboration tasks. This design provides a continuous awareness that is very essential for the success, reliability, accuracy, and responsiveness of the AI functionalities and services enabled by the DA-ITN within the AI ecosystem. 
+
 
 The DA-ITN control plane also lays a foundation for an advanced discovery infrastructure where the generated descriptors can be made easily accessible to all authorized participants to facilitate their required AI service For example, AI clients subscribed to training services can access up-to-date data descriptors and resource topologies, enabling them to select appropriate datasets and compute resources that align with their performance and accuracy goals. Similarly, inference clients or agents seeking collaboration can discover models based on capabilities, or submit task descriptors that enable models to respond intelligently and autonomously. 
 
@@ -359,10 +549,13 @@ Aside from descriptor collection, topology creation, and discovery, the DA-ITN c
 
 It is worth noting that the DA-ITN’s Control Plane is not constrained by specific protocol stacks. Instead, it provides a flexible connectivity and coordination infrastructure upon which various AI-related protocols—such as Agent-to-Agent (A2A), Model Control Protocol (MCP), or AI Coordination Protocol (ACP)—can operate. Regardless of the protocol used, implementations must meet the core DA-ITN requirements, including timely information exchange, flexible descriptor encapsulation, support for multi-model and multi-domain environments, and robust security and privacy protections. The DA-ITN is also designed to support both centralized and decentralized modes of operation, offering high adaptability across different deployment contexts.
 
+It’s also important to clarify that the Intelligence Layer encompasses all previously mentioned DA-ITN core functions, along with any additional intelligence required to support the full range of DA-ITN services. The term “Intelligence Layer” is intentionally broad to allow flexibility in its design and contents. Nonetheless, its role is clearly defined: it serves as a functional layer that interfaces with other DA-ITN components through the control plane, data plane, and OAM plane to fulfill its responsibilities.
 
 ## Data Plane
 
-On the other hand, the Data Plane of the DA-ITN provides support for mobility management and intelligent scheduling, enabling the dynamic creation of rendezvous points where data, queries, models, and compute infrastructure can be brought together with minimal latency and overhead. Thanks to its infrastructure-agnostic nature, the DA-ITN leverages existing communication networks—such as those offered by 6G or edge service providers—as tools to enable model mobility, data mobility, and agent-to-agent coordination.  This capability is essential for supporting scenarios where mobility or geographical dispersion of resources would otherwise lead to performance degradation or inefficiency.
+On the other hand, the Data Plane of the DA-ITN provides support for mobility management and intelligent scheduling, enabling the dynamic creation of rendezvous points where data, queries, models, agents, and compute infrastructure can be brought together with minimal latency and overhead. Thanks to its infrastructure-agnostic nature, the DA-ITN leverages existing communication networks—such as those offered by 6G or edge service providers—as tools to enable model mobility, data mobility, and agent-to-agent coordination. This capability is essential for supporting scenarios where mobility or geographical dispersion of resources would otherwise lead to performance degradation or inefficiency. 
+
+The construction of the Data Plane may fall under the responsibility of the DA-ITN core or Intelligence Layer, which would orchestrate the necessary resources from the DA-ITN Enabler block to build the required structure. Alternatively, the Enabler block itself may possess sufficient intelligence to autonomously construct the Data Plane as needed.
 
 ## Operation and Management Plane (OAM)
 
@@ -374,7 +567,7 @@ Moreover, the OAM layer enables interactive control. Clients can use it to adjus
 
 In this way, the OAM layer effectively functions as the control dashboard or command-line terminal of the DA-ITN-enabled AI ecosystem. Whether through a graphical user interface (GUI), APIs, or automated orchestration scripts, the OAM provides the necessary tools for fine-grained management, status visualization, and policy enforcement.
 
-Beyond individual model control, the OAM layer also facilitates system-wide coordination and policy administration—ensuring compliance with service-level agreements (SLAs), enforcing data governance policies, and managing access rights across domains. It plays a foundational role in building trustworthy, maintainable, and operationally efficient AI services across diverse infrastructure providers and stakeholders.
+Beyond individual model control, the OAM layer also facilitates system-wide coordination and policy administration. OAM in coordination with a potential policy enforcement module man help ensuring compliance with service-level agreements (SLAs), enforcing data governance policies, and managing access rights across domains. It plays a foundational role in building trustworthy, maintainable, and operationally efficient AI services across diverse infrastructure providers and stakeholders.
 
 
 ## Summary of the DA-ITN General Framework
@@ -386,11 +579,11 @@ In the following sections, we provide more detailed insights into the specific D
 
 # DA-ITN for Training
 
-The training architecture of the DA-ITN consists of five layers: i) the terminal layer; ii) the network layer; iii) the data, resource, and reachability topology layer (DRRT); iv) the DA-ITN intelligence layer; and v) the OAM layer. The layers interact together using control and data planes (CP and DP respectively) as is discussed in the following.
+The training architecture of the DA-ITN consists of five layers: i) the terminal layer (DA-ITN provider and client communities); ii) the network layer (Enablers); iii) the data, resource, and reachability topology layer (DRRT); iv) the DA-ITN intelligence layer (DA-ITN core); and v) the OAM layer. The layers interact together using control and data planes (CP and DP respectively) as is discussed in the following.
 
 First, the network layer, which is at the heart of the DA-ITN training system, is responsible for providing connectivity services to the four other layers. It provides both control and data plane connectivity to enable various services. The network layer connects to the terminal and DRRT layers via CP and DP links, and connects to the intelligence layer via a CP link only. The network layer also enables the overarching OMA layer by enabling a multi-layer connectivity structure. 
 
-Second, the terminal layer, the lowest layer in the architecture, contains the terminal components of the system. These include nodes that host the training data, facilities that provide computing resources where the model can be trained, and newly proposed components that we refer to as the model performance verification units (MPVUs), where the model testing phase takes place. It should be noted that facilities providing computing resources come in various forms including private property such as personal devices, in a distributed form such as in the case of mobile edge computing in 6G networks, on the cloud such as on the AWS cloud, or anywhere that is accessible by both the data and the model and holds sufficient compute for training. As for the MPVU, this unit is important when conducting distributed training as it takes the role of a trusted proxy node that holds a globally constructed testing dataset - the dataset is constructed via collecting sample datasets from each participating node - and provides safe and secure access to it. Last, the terminal layer also hosts the AI training clients.
+Second, the terminal layer from the point of view of training, is the lowest layer in the architecture, and it contains the terminal components of the system. These include nodes that host the training data, facilities that provide computing resources where the model can be trained, and newly proposed components that we refer to as the model performance verification modules (MPVMs), where the model testing phase takes place. It should be noted that facilities providing computing resources come in various forms including private property such as personal devices, in a distributed form such as in the case of mobile edge computing in 6G networks, on the cloud such as on the AWS cloud, or anywhere that is accessible by both the data and the model and holds sufficient compute for training. As for the MPVU, this unit is important when conducting distributed training as it takes the role of a trusted proxy node that holds a globally constructed testing dataset - the dataset is constructed via collecting sample datasets from each participating node - and provides safe and secure access to it. Last, the terminal layer also hosts the AI training clients.
 
 The terminal layer relies on the network layer to build an overarching knowledge-sharing network. To be exact, the network layer provides three main services to the terminal layer, namely: i) moving models and data between the identified rendezvous compute points where training can happen; ii) moving the models towards the MPVU units where performance evaluation can be conducted to keep track of the training progress; and iii) enabling AI training clients to submit their models, monitor the training progress, modify training requirements, and collect the trained models. Control and data traffic exist for each one of these services. For instance, moving a model toward a compute facility requires authorization for the utility of the resources; hence, authorization control data is required to be exchanged over the Terminal-NET CP links. The service also requires the physical transmission of the model to the computing facility which is handled over the Terminal-NET DP link. Similar situations can be extrapolated for the other provided services. It is worth noting that the network layer can be built on top of any access network technology including 3GPP cellular networks, WiFi, wireline, peer-to-peer, satellites, and non-terrestrial networks (NTN), or a combination of the above. These networks can be used to build dedicated CP and DP links strictly designed to enable the DA-ITN training system and its services.
 
@@ -413,7 +606,7 @@ The Inference architecture of the DA-ITN provides automated AI inference service
 
 First, unlike training, where the moving components are models and training data, and the rendezvous points are computing facilities, in inference, models/agents and queries/tasks are the moving components that require networking, and the rendezvous points are model hosting facilities. 
 
-Second, in inference, the clients are both the task/query owners as well as the model/agent owners. Query owners are the inference service users who send their queries into the system and collect the resulting inference. On the other hand, model owners are divided into two types. The first type consists of model hosts - the model used for inference does not have to be owned by them, but it is hosted on their computing facilities.  The second type consists of model providers - they develop models and deploy them either at their own facilities or at model hosts. Model owners are represented in the terminal layer as model deployment facility providers (MDFP) which are distributed across the global network.
+Second, in inference, the clients are both the task/query owners as well as the model/agent owners. Query owners are the inference service users who send their queries into the system and collect the resulting inference. On the other hand, model owners are divided into two types. The first type consists of model hosts - the model used for inference does not have to be owned by them, but it is hosted on their computing facilities.  The second type consists of model/agent providers - they develop models/agents and deploy them either at their own facilities or at model hosts. Model owners are represented in the terminal layer as model deployment facility providers (MDFP) which are distributed across the global network.
 
 Third,  the network layer provides the following services to the terminal layer using its control and data planes: i) model mobility from model generators to model hosts; ii) query routing towards models deployed on MDFPs; iii) model mobility from one location to the other in case of load balancing situations; iv) model mobility towards re-training and calibration facilities which may be hosted on MVPF units; v) query response and inference result routing towards the query owners or any indicated destination around the globe; and vi) feedback and monitoring information to model and query owners.
 
