@@ -10,7 +10,7 @@ date:
 consensus: true
 v: 3
 area: Internet
-workgroup: "Internet Area Working Group"
+workgroup:
 keyword:
  - AI Network
  - Agentic Networks

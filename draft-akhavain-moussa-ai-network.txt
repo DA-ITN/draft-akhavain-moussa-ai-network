@@ -2,7 +2,7 @@
 
 
 
-Internet Area Working Group                                  A. Akhavain
+Network Working Group                                        A. Akhavain
 Internet-Draft                                                 H. Moussa
 Intended status: Informational                             Huawei Canada
 Expires: 13 March 2026                                  9 September 2025
