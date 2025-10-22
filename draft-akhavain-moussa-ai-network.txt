@@ -5,7 +5,7 @@
 Network Working Group                                        A. Akhavain
 Internet-Draft                                                 H. Moussa
 Intended status: Informational                             Huawei Canada
-Expires: 13 March 2026                                  9 September 2025
+Expires: 25 April 2026                                   22 October 2025
 
 
       AI Network for Training, Inference, and Agentic Interactions
@@ -13,22 +13,29 @@ Expires: 13 March 2026                                  9 September 2025
 
 Abstract
 
-   Artificial Intelligence (AI) is rapidly reshaping industries and
-   daily life, driven by advances in large language models (LLMs) such
-   as ChatGPT, Claude, Grok, and DeepSeek.  These models have
-   demonstrated the transformative potential of AI across diverse
-   applications, from productivity tools to complex decision-making
-   systems.  However, the effectiveness and reliability of AI hinge on
-   two foundational processes: training and inference.  Each presents
-   unique challenges related to data management, computation,
-   connectivity, privacy, trust, security, and governance.  In this
-   draft, we introduce the Data and Agent Aware-Inference and Training
-   Network (DA-ITN)—a unified, intelligent, multi-plane network
-   architecture designed to address the full spectrum of AI system
-   requirements.  DA-ITN provides a scalable and adaptive infrastructure
-   that connects AI clients, data providers, model providers, agent
-   providers, service facilitators, and computational resources to
-   support end-to-end AI lifecycle operations.  The architecture
+   Artificial Intelligence (AI) is rapidly transforming industries and
+   everyday life, fueled by advances in model architectures, training
+   paradigms, and data infrastructure for generation and consumption.
+   Today, machine learning models are embedded in many of our daily
+   activities, ranging from simple classification systems to advanced
+   architectures such as large language models (LLMs) like ChatGPT,
+   Claude, Grok, and DeepSeek.  These models highlight the
+   transformative potential of AI across diverse applications—from
+   productivity tools to complex decision-making systems.
+
+   However, the effectiveness and reliability of AI depend on two
+   foundational processes: training and inference.  Each process
+   introduces unique challenges related to data management, computation,
+   connectivity, privacy, trust, security, and governance.
+
+   In this draft, we introduce the Data and Agent Aware-Inference and
+   Training Network (DA-ITN)—a unified, intelligent, multi-plane network
+   architecture designed to address the full spectrum of requirements
+   needed to enable AI networks.  DA-ITN provides a scalable and
+   adaptive infrastructure that connects AI clients, data providers,
+   model providers, agent providers, service facilitators, and
+   computational resources to support end-to-end training, inference,
+   and agentic interaction lifecycle operations.  The architecture
    features dedicated control, data, and operations & management (OAM)
    planes to orchestrate training, inference, and agentic services while
    ensuring reliability, transparency, and accountability.  By outlining
@@ -43,27 +50,25 @@ Status of This Memo
    This Internet-Draft is submitted in full conformance with the
    provisions of BCP 78 and BCP 79.
 
+
+
+
+Akhavain & Moussa         Expires 25 April 2026                 [Page 1]
+
+Internet-Draft                 AI-Internet                  October 2025
+
+
    Internet-Drafts are working documents of the Internet Engineering
    Task Force (IETF).  Note that other groups may also distribute
    working documents as Internet-Drafts.  The list of current Internet-
    Drafts is at https://datatracker.ietf.org/drafts/current/.
-
-
-
-
-
-
-Akhavain & Moussa         Expires 13 March 2026                 [Page 1]
-
-Internet-Draft                 AI-Internet                September 2025
-
 
    Internet-Drafts are draft documents valid for a maximum of six months
    and may be updated, replaced, or obsoleted by other documents at any
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 13 March 2026.
+   This Internet-Draft will expire on 25 April 2026.
 
 Copyright Notice
 
@@ -86,34 +91,34 @@ Table of Contents
      2.1.  Centralized versus Decentralized Training . . . . . . . .   4
      2.2.  Requirements Breakdown  . . . . . . . . . . . . . . . . .   5
        2.2.1.  Data Collection/Model Dispatching . . . . . . . . . .   6
-       2.2.2.  Data and Resource Discovery . . . . . . . . . . . . .   7
-       2.2.3.  Mobility and Service Continuity Handling  . . . . . .   9
+       2.2.2.  Dataset Advertisement and Discovery . . . . . . . . .   7
+       2.2.3.  Handling Mobility and Service Continuity  . . . . . .   9
        2.2.4.  Privacy, Trust, and Data Ownership and Utility  . . .  10
        2.2.5.  Testing and Performance Management  . . . . . . . . .  10
-       2.2.6.  QoS Guarantee . . . . . . . . . . . . . . . . . . . .  10
+       2.2.6.  Training Service QoS Guarantee  . . . . . . . . . . .  11
        2.2.7.  Charging and Billing  . . . . . . . . . . . . . . . .  11
    3.  Inference . . . . . . . . . . . . . . . . . . . . . . . . . .  12
      3.1.  Requirement Breakdown . . . . . . . . . . . . . . . . . .  12
-       3.1.1.  Model Deployment and Mobility . . . . . . . . . . . .  12
-       3.1.2.  Model Discovery and Description . . . . . . . . . . .  14
-       3.1.3.  Query and Inference Result Routing  . . . . . . . . .  16
-       3.1.4.  Inference Chaining/Collaborative Inference  . . . . .  17
+       3.1.1.  Model Deployment and Mobility . . . . . . . . . . . .  13
+       3.1.2.  AI Model (AI Agent) Discovery and Description . . . .  14
+       3.1.3.  Query and Inference Result Routing  . . . . . . . . .  17
+       3.1.4.  Inference Chaining/Collaborative Inference  . . . . .  18
        3.1.5.  Compute and Resource Management . . . . . . . . . . .  19
        3.1.6.  Privacy Preservation and Security . . . . . . . . . .  19
-       3.1.7.  Utility Handling and QoS Requirements . . . . . . . .  19
+       3.1.7.  Utility Handling and QoS Requirements . . . . . . . .  20
+
+
+
+Akhavain & Moussa         Expires 25 April 2026                 [Page 2]
+
+Internet-Draft                 AI-Internet                  October 2025
+
+
        3.1.8.  Model Upgrade Streamlining  . . . . . . . . . . . . .  20
        3.1.9.  Charging and Billing  . . . . . . . . . . . . . . . .  21
-   4.  Data and Agent Aware Inference and Training Network (DA-ITN):
-           General Framework . . . . . . . . . . . . . . . . . . . .  21
+   4.  Framework for DA-ITN (Data and Agent Aware Inference and
+           Training Network) . . . . . . . . . . . . . . . . . . . .  22
      4.1.  DA-ITN Core . . . . . . . . . . . . . . . . . . . . . . .  23
-
-
-
-Akhavain & Moussa         Expires 13 March 2026                 [Page 2]
-
-Internet-Draft                 AI-Internet                September 2025
-
-
      4.2.  DA-ITN Service Provider Community . . . . . . . . . . . .  24
      4.3.  DA-ITN Client Community . . . . . . . . . . . . . . . . .  25
      4.4.  DA-ITN Enablers . . . . . . . . . . . . . . . . . . . . .  26
@@ -136,12 +141,17 @@ Internet-Draft                 AI-Internet                September 2025
    AI has become a major focus in recent years, with its influence
    rapidly expanding from everyday tasks like scheduling to complex
    areas such as healthcare.  This growth is largely driven by advances
-   in large language models (LLMs) like ChatGPT, Claude, Grok, and
-   DeepSeek, which are now widely used for tasks such as brainstorming,
-   editing, coding, and data analysis.  These real-world applications
-   highlight AI’s transformative power to boost productivity and
-   simplify life.  It’s clear that AI is not a passing trend but a
-   lasting and evolving force.
+   in model architectures, training paradigms, and data infrastructure
+   for generation and consumption.  For example, large language models
+   (LLMs) like ChatGPT, Claude, Grok, and DeepSeek, which are now widely
+   used for tasks such as text generation, translation, reasoning,
+   coding, and data analysis, highlight AI’s transformative power to
+   boost productivity and simplify real-life applications.  As such, it
+   is clear that AI and machine learning are not passing trends but
+   lasting and evolving forces that will only continue to evolve.  For
+   clarity, in this draft, the term AI refers broadly to all types of
+   models—from simple classification systems to advanced general
+   intelligence models.
 
    However, it is crucial to recognize that the success of AI systems
    relies on two fundamental pillars: training and inference.  Both of
@@ -152,60 +162,50 @@ Internet-Draft                 AI-Internet                September 2025
    continuously monitored and governed to safeguard user safety and
    societal well-being.
 
+
+
+
+Akhavain & Moussa         Expires 25 April 2026                 [Page 3]
+
+Internet-Draft                 AI-Internet                  October 2025
+
+
    As such, aspects such as data management, computational resources,
    connectivity, security, privacy, trust, billing, and rigorous testing
    are all crucial when handling AI systems.  Thus, it is important to
-   clearly understand the requirements of the AI systems from both the
-   training and inference prospective as both of these pillars
-   constitute an entangled framework and cannot be tackled in isolation.
+   clearly understand the requirements of the AI systems from the
+   training, inference, and agentic interaction prospectives as all of
+   these pillars constitute an entangled framework and cannot be tackled
+   in isolation.
 
    In this document, we present a vision of an ecosystem, especially
-   designed to satisfy the requirements of AI from training and
-   inference points of view.  We propose a unified, intelligent network
+   designed to facilitate what we call the AI network.  We propose a
+   unified, intelligent network architecture called the "Data and Agent
+   aware-Inference and Training Network" (DA-ITN).  This ecosystem is
+   envisioned as a comprehensive, multi-plane network with dedicated
+   control, data, and operations & management (OAM) planes.  It is
+   designed to interconnect all relevant stakeholders, including
+   clients, AI service providers, data providers, and third-party
+   facilitators.  Its core objective is to provide the infrastructure
+   and coordination necessary to support an ecosystem for enabling AI of
+   the future at scale.
 
-
-
-Akhavain & Moussa         Expires 13 March 2026                 [Page 3]
-
-Internet-Draft                 AI-Internet                September 2025
-
-
-   architecture—the Data and Agent aware-Inference and Training Network
-   (DA-ITN).  This ecosystem is envisioned as a comprehensive, multi-
-   plane network with dedicated control, data, and operations &
-   management (OAM) planes.  It is designed to interconnect all relevant
-   stakeholders, including clients, AI service providers, data
-   providers, and third-party facilitators.  Its core objective is to
-   provide the infrastructure and coordination necessary to support an
-   ecosystem for enabling AI of the future at scale.
-
-   This document aims to introduce the DA-ITN vision and establish a
-   compelling case for its central role in enabling a new generation of
-   AI-native networks, i.e., AI internet.  These networks will be
-   optimized not only for learning and inference but also for seamless
-   collaboration, interaction, and communication among AI agents.  To
-   that end, we begin by outlining the specific requirements of AI from
-   both the training and inference standpoints.  We then introduce the
-   core components of the DA-ITN and illustrate how they collectively
-   meet these requirements.  Finally, this network is positioned as an
-   ecosystem for agent-to-agent collaborations, interactions, and
-   communications.
+   To that end, we begin by outlining the specific requirements of AI
+   from both the training and inference standpoints.  We then introduce
+   the core components of the DA-ITN and illustrate how they
+   collectively meet these requirements.  Finally, this network is
+   positioned as an ecosystem for agent-to-agent collaborations,
+   interactions, and communications.
 
 2.  Training Requirements
 
-   AI model training is the foundational process through which an
-   artificial intelligence system learns to perform tasks by analyzing
-   data and adjusting its internal parameters—typically the weights in
-   neural networks—to minimize prediction errors.  At its core, this
-   process involves feeding input data into a model, and applying
+   AI model training is the foundational process through which an AI
+   system learns to perform tasks by analyzing data and adjusting its
+   internal parameters to minimize performance errors.  At its core,
+   this process involves feeding input data into a model, and applying
    optimization algorithms to iteratively refine the model’s
-   performance.  Among the most influential outcomes of this process are
-   foundation models, such as ChatGPT and its peers, which are capable
-   of performing a wide range of tasks across domains.  Training these
-   models now occurs at an unprecedented scale, requiring massive
-   compute infrastructure, enormous amounts of training data, high-speed
-   interconnects, and parallelized training frameworks (e.g., data,
-   model, and pipeline parallelism).
+   performance.  As such, the training process involves creating
+   rendezvous point where data, compute, and AI models can interact.
 
 2.1.  Centralized versus Decentralized Training
 
@@ -214,36 +214,37 @@ Internet-Draft                 AI-Internet                September 2025
    hinges on two fundamental components: the model and the data.  While
    the model itself is often developed and hosted in a centralized
    location—typically within the secure infrastructure of the model
-   owner or designer—data is inherently distributed.  It originates from
-   sensors, devices, logs, events, documents, and other diverse sources
-   spread across different geographies and domains.  To be exact,
-   whether due to geographic dispersion, organizational silos, privacy
+   owner or designer—data is inherently distributed.  The training data
+   might originate from sensors, devices, logs, events, documents, and
+   other diverse sources spread across different geographies and
+   domains.  To be exact, whether due to geographic dispersion,
 
 
 
-Akhavain & Moussa         Expires 13 March 2026                 [Page 4]
+Akhavain & Moussa         Expires 25 April 2026                 [Page 4]
 
-Internet-Draft                 AI-Internet                September 2025
+Internet-Draft                 AI-Internet                  October 2025
 
 
-   constraints, or edge-device generation, data rarely exists in a
-   single, clean repository.
+   organizational silos, privacy constraints, or edge-device generation,
+   data rarely exists in a single, clean repository.
 
    Today, model training can happen in one of two ways or a combination
    thereof: centralized or decentralized.  In centralized training,
    thanks to the development of robust data collection techniques and
    high-throughput connectivity networks, it is now feasible to collect
-   data and bring it to where the model training would occur.  This
-   traditional approach is often referred to as model-centralized
-   training.  On the other hand, a more recent paradigm known as model-
-   follow-data has emerged, advocating for the reverse: rather than
-   transporting large volumes of potentially sensitive data to a central
-   location, the model is dispatched to where the data resides—enabling
-   distributed or federated training.
+   data and bring it to where the model training would occur.  On the
+   other hand, a more recent paradigm known as model-follow-data has
+   emerged, advocating for the reverse: rather than transporting large
+   volumes of potentially sensitive data to a central location, the
+   model is dispatched to where the data resides—enabling distributed or
+   federated training.
 
    Accordingly, to facilitate the training process, rendezvous points
-   scheduling between distributed data, compute and storage resources,
-   and an AI model awaiting training needs to be arranged and managed,
+   scheduling, whether centralized (data is collected and shipped to
+   where the model is) or decentralize (model is shipped to where the
+   data is), between distributed data, compute and storage resources,
+   and AI models awaiting training needs to be arranged and managed,
    which is fundamental for successful model training.  However, this
    scheduling process introduces a number of challenges spanning
    privacy, trust, utility, and computational and connectivity resources
@@ -262,13 +263,13 @@ Internet-Draft                 AI-Internet                September 2025
 2.2.  Requirements Breakdown
 
    Consider a number of AI model training clients awaiting training
-   service.  An AI model training client is a user with a raw or a pre-
+   service.  An AI model training client is a user with a new or a pre-
    trained model who wishes to train or continue training their AI model
    using data that can be found in the data corpus.  The data corpus
    (the global dataset), as has been previously established, consists of
    a group of datasets that are distributed across various geographical
-   locations.  AI clients require access to this data either in a
-   centralized or distributed manner.
+   locations.  The AI model training client requires access to this data
+   either in a centralized or distributed manner.
 
 
 
@@ -276,10 +277,9 @@ Internet-Draft                 AI-Internet                September 2025
 
 
 
-
-Akhavain & Moussa         Expires 13 March 2026                 [Page 5]
+Akhavain & Moussa         Expires 25 April 2026                 [Page 5]
 
-Internet-Draft                 AI-Internet                September 2025
+Internet-Draft                 AI-Internet                  October 2025
 
 
 2.2.1.  Data Collection/Model Dispatching
@@ -287,11 +287,12 @@ Internet-Draft                 AI-Internet                September 2025
    As previously discussed, data is inherently distributed.  In
    centralized training paradigms, this data must be transferred from
    its sources to centralized locations where model training occurs.
-   Consider a scenario involving multiple clients, each awaiting
-   centralized training of AI models using distinct data sets of
-   interest.  Aggregating large volumes of data from geographically
-   dispersed sources to centralized servers introduces several
-   significant challenges:
+   Consider a scenario involving multiple AI model training clients,
+   each awaiting centralized training of their AI model.  Each client is
+   interested in a particular data set that is sufficient for the
+   intended training objective.  Aggregating large volumes of data from
+   geographically dispersed sources to the centralized server of each
+   client introduces several significant challenges:
 
    *  Communication Overhead: The sheer volume of data to be transmitted
       can place substantial strain on the underlying transport networks,
@@ -332,17 +333,17 @@ Internet-Draft                 AI-Internet                September 2025
 
 
 
-
-Akhavain & Moussa         Expires 13 March 2026                 [Page 6]
+Akhavain & Moussa         Expires 25 April 2026                 [Page 6]
 
-Internet-Draft                 AI-Internet                September 2025
+Internet-Draft                 AI-Internet                  October 2025
 
 
    As previously noted, modern AI models are growing increasingly large
    in size.  In decentralized training, it is often necessary to
-   replicate the model and transmit it to multiple, geographically
-   dispersed data sites.  This results in a different but equally
-   significant set of logistical and technical hurdles:
+   replicate the AI model that require training and transmit the copies
+   to multiple geographically dispersed data sites.  This results in a
+   different but equally significant set of logistical and technical
+   hurdles:
 
    *  Communication Overhead: While data transfer is avoided,
       dispatching large model files across the network to multiple
@@ -364,7 +365,7 @@ Internet-Draft                 AI-Internet                September 2025
       is essential to maximize the utility of training and to maintain
       up-to-date model performance.
 
-2.2.2.  Data and Resource Discovery
+2.2.2.  Dataset Advertisement and Discovery
 
    Given the distributed nature of data, there must be a mechanism
    through which data owners can advertise information about their
@@ -375,87 +376,87 @@ Internet-Draft                 AI-Internet                September 2025
    with their training objectives.  Training objectives can be one or
    more of: target performance, convergence time, training cost, etc.
 
-   Crucially, this discovery process may need to operate across multiple
-   network domains and heterogeneous communication infrastructures.  For
-   example, an AI training client operating over a wireline connection
-   may be interested in data residing on a 3GPP mobile network.  This
-   raises an important question: How can data owners effectively
-   advertise their datasets in a way that is discoverable across diverse
-   domains?  To enable such cross-domain data visibility and discovery,
-   the following key requirements must be considered:
+   Crucially, the dataset discovery process may need to operate across
+   multiple network domains and heterogeneous communication
+   infrastructures.  For example, an AI training client operating over a
+   wireline connection may be interested in data residing on a 3GPP
+   mobile network.  This raises an important question: How can data
+   owners effectively advertise their datasets in a way that is
+   discoverable across diverse domains?  To enable such cross-domain
+   data visibility and discovery, the following key requirements shall
+   be considered:
 
 
 
 
-
-
-Akhavain & Moussa         Expires 13 March 2026                 [Page 7]
+Akhavain & Moussa         Expires 25 April 2026                 [Page 7]
 
-Internet-Draft                 AI-Internet                September 2025
+Internet-Draft                 AI-Internet                  October 2025
 
 
-   *  Data Descriptors: These are metadata objects used by data owners
-      to reveal essential information about their datasets to AI
-      clients.  Effective data descriptors must be self-contained,
+   *  Dataset Descriptors: These are metadata objects used by dataset
+      owners to reveal essential information about their datasets to AI
+      clients.  Effective dataset descriptors must be self-contained,
       privacy-preserving, and informative enough to support decision-
-      making by training clients.  They should allow data owners to
+      making by training clients.  They should allow dataset owners to
       selectively disclose details about their data—such as type,
       relevance, quality metrics, freshness, and perhaps cost of
       utility—while concealing sensitive or proprietary information
       (privacy preservation).  Data descriptors also need to be easily
-      modified as data can be dynamic, and the change in data needs to
-      be effectively reflected into the data descriptions.  To ensure
-      interoperability, data descriptors can either follow a
-      standardized format or adopt a flexible but well-defined structure
-      that enables consistent interpretation across different systems
-      and domains.
+      modified as dataset can be dynamic, and the change in dataset
+      needs to be effectively reflected into the dataset descriptions.
+      To ensure interoperability, dataset descriptors can either follow
+      a standardized format or adopt a flexible but well-defined
+      structure that enables consistent interpretation across different
+      systems and domains.
 
-   *  Data Discovery Mechanisms: These refer to the processes by which
-      AI training clients locate and identify datasets across
-      potentially vast and heterogeneous environments.  An effective
-      discovery mechanism should support global-scale searchability and
-      cross-domain operability, allowing clients to find relevant
-      datasets regardless of where they reside or which communication
-      infrastructure they are accessible through.  Discovery protocols
-      may be standardized within specific domains (e.g., mobile
-      networks, IoT platforms) or designed to function interoperable
-      across multiple domains, enabling seamless integration and
-      visibility.  It should also be highlighted that, discovery
-      mechanisms should be considerably up-to-date with the changes that
-      would occur as the underlying data changes dynamically.
+   *  Dataset Discovery Mechanisms: The dataset discovery refers to the
+      processes by which AI training clients locate and identify
+      datasets across potentially vast and heterogeneous environments.
+      An effective discovery mechanism should support global-scale
+      searchability and cross-domain operability, allowing clients to
+      find relevant datasets regardless of where they reside or which
+      communication infrastructure they are accessible through.
+      Discovery protocols may be standardized within specific domains
+      (e.g., mobile networks, IoT platforms) or designed to function
+      interoperable across multiple domains, enabling seamless
+      integration and visibility.  It should also be highlighted that,
+      discovery mechanisms should be considerably up-to-date with the
+      changes that would occur as the underlying data changes
+      dynamically.
 
-   *  Data Relationship Maps: Training often requires identifying groups
-      of datasets that collectively meet specific requirements.
+   *  Dataset Relationship Maps: Training often requires identifying
+      groups of datasets that collectively meet specific requirements.
       Evaluating each dataset in isolation may be insufficient.
       Instead, a mechanism is needed to establish relationships among
       datasets, enabling AI training clients to assemble the appropriate
       combination of data for their tasks.  These relationships can be
       envisioned to look like maps or topologies.  This is a crucial
-      step as if an AI model client was not able to find the right
+      step as, if an AI model client was not able to find the right
       dataset that satisfies its requirements, the client might choose
       not to submit the model for training at this time which may reduce
-      resource wastage from the get go.
+      resource wastage from the get-go.
 
    *  Timely reporting: Given the dynamic nature of data availability,
       characteristics, and accessibility, it is essential to have
       advertisement mechanisms that can promptly reflect any changes.
       Real-time or near-real-time updates ensure that the AI training
       process remains aligned with the most current data conditions,
-      thereby maximizing both effectiveness and accuracy.  Timely
 
 
 
-Akhavain & Moussa         Expires 13 March 2026                 [Page 8]
+Akhavain & Moussa         Expires 25 April 2026                 [Page 8]
 
-Internet-Draft                 AI-Internet                September 2025
+Internet-Draft                 AI-Internet                  October 2025
 
 
+      thereby maximizing both effectiveness and accuracy.  Timely
       reporting helps prevent training on outdated or irrelevant data
       and supports optimal decision-making in model selection and
       training pipeline configuration.
 
    Additionally, it should be highlighted that in AI training,
-   discovering data alone is not enough.  For instance, third-party
+   discovering dataset alone is not enough.  For instance, third-party
    resources like compute and storage are essential, and the providers
    of those resources must be able to advertise their capabilities so AI
    clients can locate and utilize them effectively.  Just like with
@@ -466,7 +467,7 @@ Internet-Draft                 AI-Internet                September 2025
    decentralized training, as both can be done on third party
    infrastructure.
 
-2.2.3.  Mobility and Service Continuity Handling
+2.2.3.  Handling Mobility and Service Continuity
 
    In some decentralized training applications, AI models are designed
    to traverse a predefined route, training on multiple datasets in a
@@ -489,6 +490,22 @@ Internet-Draft                 AI-Internet                September 2025
    checkpointing, fallback resource selection, or dynamic rerouting of
    model or data to maintain training progress and system reliability.
 
+
+
+
+
+
+
+
+
+
+
+
+Akhavain & Moussa         Expires 25 April 2026                 [Page 9]
+
+Internet-Draft                 AI-Internet                  October 2025
+
+
    Additionally, model mobility may involve training on datasets that
    are distributed across heterogeneous communication infrastructures.
    Some infrastructures, such as emerging 6G networks, offer built-in
@@ -499,19 +516,12 @@ Internet-Draft                 AI-Internet                September 2025
    or legacy systems, making seamless model movement and data access
    more challenging in those environments.
 
-
-
-Akhavain & Moussa         Expires 13 March 2026                 [Page 9]
-
-Internet-Draft                 AI-Internet                September 2025
-
-
 2.2.4.  Privacy, Trust, and Data Ownership and Utility
 
-   Privacy and trust are mutual responsibilities—both data owners and
-   model owners must be protected.  Granting clients access to data for
-   training and knowledge building should be a regulated process, with
-   mechanisms to track data ownership and future use.  Initial
+   Privacy and trust are mutual responsibilities between data owners and
+   model owners and shall be protected.  Granting clients access to data
+   for training and knowledge building should be a regulated process,
+   with mechanisms to track data ownership and future use.  Initial
    discussions on this topic have taken place in forums such as the AI-
    Control Working Group.
 
@@ -541,7 +551,18 @@ Internet-Draft                 AI-Internet                September 2025
    major challenge.  Developing effective, privacy-preserving methods
    for testing in such settings requires innovative solutions
 
-2.2.6.  QoS Guarantee
+
+
+
+
+
+
+Akhavain & Moussa         Expires 25 April 2026                [Page 10]
+
+Internet-Draft                 AI-Internet                  October 2025
+
+
+2.2.6.  Training Service QoS Guarantee
 
    Beyond ensuring traditional Quality of Service (QoS) for data
    transmission, a new dimension of QoS must be considered—the QoS of
@@ -555,17 +576,10 @@ Internet-Draft                 AI-Internet                September 2025
    *  What mechanisms can be used to monitor and track training
       performance in real time?
 
-
-
-Akhavain & Moussa         Expires 13 March 2026                [Page 10]
-
-Internet-Draft                 AI-Internet                September 2025
-
-
    *  Should AI training be treated like best-effort traffic, where no
       guarantees are made and resources are allocated as available?
 
-   *  Or should training tasks receive prioritized or differentiated
+   *  Should training tasks receive prioritized or differentiated
       service levels, similar to high-priority traffic in traditional
       networks?
 
@@ -582,7 +596,7 @@ Internet-Draft                 AI-Internet                September 2025
    training workflows.
 
    For example, communication providers contribute not only by
-   transporting data and models across the network but also they
+   transporting dataset and models across the network but also they
    themselves may also serve as data providers.  This is particularly
    evident in the emerging design of 6G networks, which integrate
    sensing capabilities with communication infrastructure.  As a result,
@@ -597,11 +611,18 @@ Internet-Draft                 AI-Internet                September 2025
 
    Several open questions arise in this context:
 
+
+
+Akhavain & Moussa         Expires 25 April 2026                [Page 11]
+
+Internet-Draft                 AI-Internet                  October 2025
+
+
    *  Should training services follow a prepaid model, or adopt a pay-
       per-use structure?
 
-   *  Will there be tiered service offerings, such as gold, silver, and
-      platinum, each providing different levels of performance
+   *  Should there be tiered service offerings, such as gold, silver,
+      and platinum, each providing different levels of performance
       guarantees or priority access?
 
    *  How should these tiers be defined and enforced in terms of service
@@ -610,14 +631,6 @@ Internet-Draft                 AI-Internet                September 2025
    Developing fair, transparent, and scalable billing mechanisms is
    critical to facilitating collaboration across stakeholders and
    sustaining the economic viability of distributed AI training
-
-
-
-Akhavain & Moussa         Expires 13 March 2026                [Page 11]
-
-Internet-Draft                 AI-Internet                September 2025
-
-
    ecosystems.  These challenges call for further research into
    incentive structures, dynamic pricing models, and smart contract-
    based enforcement, especially in scenarios involving cross-
@@ -627,29 +640,40 @@ Internet-Draft                 AI-Internet                September 2025
 
    Inference is critical because it represents the phase where the model
    begins to deliver practical value.  Unlike training, which is
-   typically a one-time or periodic, resource-intensive process,
+   typically, a one-time or periodic, resource-intensive process,
    inference often needs to operate continuously and efficiently,
    sometimes in real-time.  Although inference is a less resource-
    intensive process, it has strict requirements that govern its
-   success.  In what follows, we explore these requirements that shall
-   enable a successful AI inference ecosystem.
+   success.  While a single AI inference might be lightweight and fast,
+   serving many users, with many inference requests, demands significant
+   hardware resources andposes serious scalability challenges.  In what
+   follows, we explore these requirements that shall enable a successful
+   AI inference ecosystem.
 
 3.1.  Requirement Breakdown
 
    We envision an inference ecosystem composed of a large number of pre-
-   trained AI models (or agents) distributed across the globe.  These
-   models are capable of performing a wide range of tasks, such as image
-   classification, language translation, or speech recognition.  Some
-   models may specialize in the same task but vary in performance,
-   accuracy, latency, or resource demands.  This diverse pool of models
-   is accessed by numerous inference clients (users or applications) who
-   submit inputs, referred to as queries, and receive task-specific
-   outputs.
+   trained AI models (or agents) distributed across a geographical
+   location.  These models are capable of performing a wide range of
+   tasks, such as image classification, language translation, or speech
+   recognition.  Some models may specialize in the same task but vary in
+   performance, accuracy, latency, or resource demands.  This diverse
+   pool of models is accessed by numerous inference clients (users or
+   applications) who submit inputs, referred to as queries, and receive
+   task-specific outputs.
 
    These queries can vary greatly in complexity, structure, and
    modality, with some requiring the cooperation of multiple models to
    fulfill a single request.  The overarching goal of the ecosystem is
    to efficiently match incoming queries with the most suitable models,
+
+
+
+Akhavain & Moussa         Expires 25 April 2026                [Page 12]
+
+Internet-Draft                 AI-Internet                  October 2025
+
+
    ensuring accurate, timely, and resource-aware responses.  Achieving
    this requires intelligent orchestration, load balancing, and
    potentially dynamic model selection based on factors such as
@@ -660,27 +684,21 @@ Internet-Draft                 AI-Internet                September 2025
 3.1.1.  Model Deployment and Mobility
 
    The first step toward building a successful AI inference ecosystem is
-   the optimal deployment of trained models, or agents.  In this
+   the optimal deployment of trained AI models (or AI agents).  In this
    context, optimality refers to both the physical or network location
    of the model and the manner in which it is deployed.  AI models vary
    significantly in size and resource requirements—ranging from
    lightweight models that are only a few kilobytes to large-scale
    models with billions of parameters.  This wide range makes deployment
-
-
-
-Akhavain & Moussa         Expires 13 March 2026                [Page 12]
-
-Internet-Draft                 AI-Internet                September 2025
-
-
    decisions critical to achieving both efficient performance and
    effective resource utilization.  Also, a unique factor to AI models/
    agents is the fact that they are software components that are not
    bounded to a certain hardware.  They can be deleted, copied, moved,
    or split across multiple compute locations.  All these unique aspects
    provide flexibility in design if the real-time status of the
-   underlying network dynamics and resources is made accessible.
+   underlying network dynamics and resources is made accessible.  As
+   such, the following aspects must be taken into account when handling
+   model deployment and mobility:
 
    *  Choosing the right facility to host a model: whether it's a
       lightweight edge device, a local server, or a high-performance
@@ -705,6 +723,13 @@ Internet-Draft                 AI-Internet                September 2025
       thereby minimizing latency and easing network traffic engineering
       challenges.
 
+
+
+Akhavain & Moussa         Expires 25 April 2026                [Page 13]
+
+Internet-Draft                 AI-Internet                  October 2025
+
+
    *  Mobility-aware deployment: the dynamic nature of inference traffic
       necessitates mobility-aware deployment.  For instance, consider a
       large data center acting as a centralized inference hub, hosting
@@ -719,23 +744,12 @@ Internet-Draft                 AI-Internet                September 2025
       preservation, or model version synchronization, all designed to
       maintain uninterrupted service during the migration process.
 
-
-
-
-
-
-
-Akhavain & Moussa         Expires 13 March 2026                [Page 13]
-
-Internet-Draft                 AI-Internet                September 2025
-
-
    In summary, optimal model deployment requires careful consideration
    of model size, resource needs, query distribution, and real-time
    adaptability.  Achieving this lays the foundation for a responsive,
    scalable, and resilient AI inference ecosystem.
 
-3.1.2.  Model Discovery and Description
+3.1.2.  AI Model (AI Agent) Discovery and Description
 
    Just as data descriptors and discovery mechanisms are essential
    during the training phase, AI model inference clients also require a
@@ -748,8 +762,8 @@ Internet-Draft                 AI-Internet                September 2025
    distinguish between models based on criteria such as performance,
    specialization, availability, and resource requirements.
 
-   This discovery process becomes even more complex when it needs to
-   function across multiple network domains and heterogeneous
+   The AI model discovery process becomes even more complex when it
+   needs to function across multiple network domains and heterogeneous
    communication infrastructures.  For instance, a client connected via
    a wireline network might need to interact with a model deployed on a
    mobile 3GPP network.  Such scenarios raise a critical question: How
@@ -765,41 +779,30 @@ Internet-Draft                 AI-Internet                September 2025
    is crucial to unlocking the full potential of a globally distributed
    inference ecosystem.
 
-   To enable such cross-domain model visibility and discovery, the
+
+
+Akhavain & Moussa         Expires 25 April 2026                [Page 14]
+
+Internet-Draft                 AI-Internet                  October 2025
+
+
+   To enable such cross-domain AI model visibility and discovery, the
    following key requirements must be considered:
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-Akhavain & Moussa         Expires 13 March 2026                [Page 14]
-
-Internet-Draft                 AI-Internet                September 2025
-
-
-   *  Model Descriptors: These are metadata objects used by model owners
-      to reveal essential aspects about their datasets to AI inference
-      clients.  Effective data descriptors must be self-contained,
-      privacy-preserving, and informative enough to support decision-
-      making by inference clients.  They should allow model owners to
-      selectively disclose details about their model—such as skills,
-      performance reviews, trust level, relevance, quality metrics,
-      freshness, and perhaps cost of utility—while concealing sensitive
-      or proprietary information.  To ensure interoperability, model
-      descriptors can either follow a standardized format or adopt a
-      flexible but well-defined structure that enables consistent
+   *  AI Model Descriptors: These are metadata objects used by model
+      owners to reveal essential aspects about their datasets to AI
+      inference clients.  Effective data descriptors must be self-
+      contained, privacy-preserving, and informative enough to support
+      decision-making by inference clients.  They should allow model
+      owners to selectively disclose details about their model—such as
+      skills, performance reviews, trust level, relevance, quality
+      metrics, freshness, and perhaps cost of utility—while concealing
+      sensitive or proprietary information.  To ensure interoperability,
+      model descriptors can either follow a standardized format or adopt
+      a flexible but well-defined structure that enables consistent
       interpretation across different systems and domains.
 
-   *  Model/agent Discovery Mechanisms: These refer to the processes by
+   *  AI Model Discovery Mechanisms: These refer to the processes by
       which AI inference clients locate and identify models/agents
       across potentially vast and heterogeneous environments.  An
       effective discovery mechanism should support global-scale
@@ -811,36 +814,41 @@ Internet-Draft                 AI-Internet                September 2025
       interoperable across multiple domains, enabling seamless
       integration and visibility.
 
-   *  Model/agent relationship maps: As queries may requiring the
+   *  AI Model relationship maps: As queries may requiring the
       collaboration between multiple models/agents, relationships
       between models/agents with respect to different task might present
       useful tools as to help clients choose the appropriate subset of
       models/agents that would handle their queries.
 
-   *  Timely Reporting: Similar to data, the status of a model can
-      change over time—for example, due to shifts in workload or
-      resource availability.  It is important that such changes are
+   *  Timely Reporting: Similar to AI datasets, the status of an AI
+      model can change over time—for example, due to shifts in workload
+      or resource availability.  It is important that such changes are
       reported promptly and accurately, allowing clients to make
       informed decisions based on the model’s current state.  This is
       essential for ensuring efficient model selection and maintaining
       high-quality, reliable inference outcomes.
 
-   It is important to emphasize that model discovery differs
+
+
+
+
+
+
+
+
+
+Akhavain & Moussa         Expires 25 April 2026                [Page 15]
+
+Internet-Draft                 AI-Internet                  October 2025
+
+
+   It is important to emphasize that AI model discovery differs
    fundamentally from data discovery.  While data are passive objects
-   that require external querying or manipulation, models are
-   intelligent, autonomous agents capable of making decisions based on
+   that require external querying or manipulation, AI models are
+   intelligent, autonomous entities capable of making decisions based on
    their own capabilities, status, and context.  This distinction opens
    up new and more dynamic possibilities for how models are discovered
    and engaged in an inference ecosystem.
-
-
-
-
-
-Akhavain & Moussa         Expires 13 March 2026                [Page 15]
-
-Internet-Draft                 AI-Internet                September 2025
-
 
    In traditional data discovery, clients search for and retrieve
    relevant datasets based on metadata or predefined criteria.  However,
@@ -877,6 +885,19 @@ Internet-Draft                 AI-Internet                September 2025
    utilization of the available model pool, especially in heterogeneous
    and dynamic environments.
 
+
+
+
+
+
+
+
+
+Akhavain & Moussa         Expires 25 April 2026                [Page 16]
+
+Internet-Draft                 AI-Internet                  October 2025
+
+
 3.1.3.  Query and Inference Result Routing
 
    A significant challenge in AI inference networks lies in efficiently
@@ -890,14 +911,6 @@ Internet-Draft                 AI-Internet                September 2025
    *  Query Routing Across Heterogeneous Networks: When a client
       accesses the inference ecosystem through a mobile network such as
       3GPP 6G, and the target model is hosted in a wireline or cloud-
-
-
-
-Akhavain & Moussa         Expires 13 March 2026                [Page 16]
-
-Internet-Draft                 AI-Internet                September 2025
-
-
       based infrastructure, routing the query across these distinct
       domains is non-trivial.  Differences in network architecture,
       protocols, and service guarantees complicate the end-to-end flow.
@@ -927,6 +940,20 @@ Internet-Draft                 AI-Internet                September 2025
       across network boundaries is a complex but critical aspect of
       real-world inference deployments.
 
+
+
+
+
+
+
+
+
+
+Akhavain & Moussa         Expires 25 April 2026                [Page 17]
+
+Internet-Draft                 AI-Internet                  October 2025
+
+
    *  Cross-Domain Connectivity and Session Management: The involvement
       of multiple network operators and domains introduces questions
       around interoperability, session tracking, and handover
@@ -944,15 +971,6 @@ Internet-Draft                 AI-Internet                September 2025
    Effectively managing this task-based collaboration is essential to
    ensure accurate, efficient, and scalable inference services.  Model
    collaboration can take several distinct forms:
-
-
-
-
-
-Akhavain & Moussa         Expires 13 March 2026                [Page 17]
-
-Internet-Draft                 AI-Internet                September 2025
-
 
    *  Inference Chaining: In this model, the output of one model serves
       as the input to the next in a sequential pipeline.  Each model
@@ -984,6 +1002,14 @@ Internet-Draft                 AI-Internet                September 2025
    infrastructure.  This infrastructure must enable seamless
    coordination between models, even when:
 
+
+
+
+Akhavain & Moussa         Expires 25 April 2026                [Page 18]
+
+Internet-Draft                 AI-Internet                  October 2025
+
+
    *  The models are hosted by different providers,
 
    *  They are deployed across heterogeneous communication networks,
@@ -1000,15 +1026,6 @@ Internet-Draft                 AI-Internet                September 2025
    essence, the ability to orchestrate model collaboration across
    diverse environments is a cornerstone of a flexible, intelligent, and
    robust AI inference ecosystem.
-
-
-
-
-
-Akhavain & Moussa         Expires 13 March 2026                [Page 18]
-
-Internet-Draft                 AI-Internet                September 2025
-
 
 3.1.5.  Compute and Resource Management
 
@@ -1041,6 +1058,14 @@ Internet-Draft                 AI-Internet                September 2025
       optimization strategies must be protected from exposure or reverse
       engineering by untrusted compute hosts.
 
+
+
+
+Akhavain & Moussa         Expires 25 April 2026                [Page 19]
+
+Internet-Draft                 AI-Internet                  October 2025
+
+
    *  Techniques such as secure computing, encrypted model execution,
       and remote attestation protocols may be necessary to ensure that
       models run securely without revealing proprietary details.
@@ -1058,13 +1083,6 @@ Internet-Draft                 AI-Internet                September 2025
    *  How can we guarantee that a model deployed on remote
       infrastructure is not being tampered with, copied, or
       intentionally repurposed?
-
-
-
-Akhavain & Moussa         Expires 13 March 2026                [Page 19]
-
-Internet-Draft                 AI-Internet                September 2025
-
 
    *  How do we ensure that workload distribution is fair across
       available models, preventing monopolization by a few and giving
@@ -1094,6 +1112,16 @@ Internet-Draft                 AI-Internet                September 2025
    improvements, and fine-tuning to maintain accuracy, adapt to new
    data, or support evolving tasks.
 
+
+
+
+
+
+Akhavain & Moussa         Expires 25 April 2026                [Page 20]
+
+Internet-Draft                 AI-Internet                  October 2025
+
+
    *  The ecosystem must support seamless model versioning, including
       adding, removing, or modifying model agents without disrupting
       ongoing services.
@@ -1110,17 +1138,6 @@ Internet-Draft                 AI-Internet                September 2025
       models, where an old model is gracefully decommissioned and
       replaced by a new one—without causing inference failures or data
       loss during the transition.
-
-
-
-
-
-
-
-Akhavain & Moussa         Expires 13 March 2026                [Page 20]
-
-Internet-Draft                 AI-Internet                September 2025
-
 
 3.1.9.  Charging and Billing
 
@@ -1147,6 +1164,20 @@ Internet-Draft                 AI-Internet                September 2025
    *  What about discovery framework providers?  Would they be offering
       a free service like google search or would it be more structured?
 
+
+
+
+
+
+
+
+
+
+Akhavain & Moussa         Expires 25 April 2026                [Page 21]
+
+Internet-Draft                 AI-Internet                  October 2025
+
+
    Developing fair, transparent, and scalable billing mechanisms is
    critical to fostering collaboration across stakeholders and
    sustaining the economic viability of distributed AI training
@@ -1155,8 +1186,8 @@ Internet-Draft                 AI-Internet                September 2025
    based enforcement, especially in scenarios involving cross-
    organizational or cross-network cooperation.
 
-4.  Data and Agent Aware Inference and Training Network (DA-ITN):
-    General Framework
+4.  Framework for DA-ITN (Data and Agent Aware Inference and Training
+    Network)
 
    The DA-ITN is envisioned as a multi-domain, multi-technology network
    operating at the AI layer, designed to address the various layers of
@@ -1167,16 +1198,6 @@ Internet-Draft                 AI-Internet                September 2025
 
    The network consists of set of nodes and equipment connected via one
    or more traditional underlay networks as depicted below.
-
-
-
-
-
-
-Akhavain & Moussa         Expires 13 March 2026                [Page 21]
-
-Internet-Draft                 AI-Internet                September 2025
-
 
 +---------------------------------------------+
 | DA-ITN nodal view                           |
@@ -1204,6 +1225,15 @@ Internet-Draft                 AI-Internet                September 2025
    this manner, DA-ITN can be divided into four interacting major
    building blocks as shown bellow.
 
+
+
+
+
+Akhavain & Moussa         Expires 25 April 2026                [Page 22]
+
+Internet-Draft                 AI-Internet                  October 2025
+
+
            +--------------------+         +--------------------+
            |   DA-ITN Service   |         |   DA-ITN Client    |
            | Provider Community |         |     Community      |
@@ -1226,13 +1256,6 @@ Internet-Draft                 AI-Internet                September 2025
            +---------------------------------------------------+
            |                    DA-ITN Enablers                |
            +---------------------------------------------------+
-
-
-
-Akhavain & Moussa         Expires 13 March 2026                [Page 22]
-
-Internet-Draft                 AI-Internet                September 2025
-
 
       Figure 2: Figure 2: DA-ITN high level architecture and building
                                    blocks
@@ -1262,32 +1285,9 @@ Internet-Draft                 AI-Internet                September 2025
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Akhavain & Moussa         Expires 13 March 2026                [Page 23]
+Akhavain & Moussa         Expires 25 April 2026                [Page 23]
 
-Internet-Draft                 AI-Internet                September 2025
+Internet-Draft                 AI-Internet                  October 2025
 
 
 +-----------------------------------+
@@ -1341,9 +1341,9 @@ Internet-Draft                 AI-Internet                September 2025
 
 
 
-Akhavain & Moussa         Expires 13 March 2026                [Page 24]
+Akhavain & Moussa         Expires 25 April 2026                [Page 24]
 
-Internet-Draft                 AI-Internet                September 2025
+Internet-Draft                 AI-Internet                  October 2025
 
 
    etc.  DA-ITN dispenses revenue to providers for the services rendered
@@ -1397,9 +1397,9 @@ Internet-Draft                 AI-Internet                September 2025
 
 
 
-Akhavain & Moussa         Expires 13 March 2026                [Page 25]
+Akhavain & Moussa         Expires 25 April 2026                [Page 25]
 
-Internet-Draft                 AI-Internet                September 2025
+Internet-Draft                 AI-Internet                  October 2025
 
 
    control the training process and make all decisions independently.
@@ -1453,9 +1453,9 @@ Internet-Draft                 AI-Internet                September 2025
 
 
 
-Akhavain & Moussa         Expires 13 March 2026                [Page 26]
+Akhavain & Moussa         Expires 25 April 2026                [Page 26]
 
-Internet-Draft                 AI-Internet                September 2025
+Internet-Draft                 AI-Internet                  October 2025
 
 
 +-------------------------------------------------------------------------+
@@ -1509,9 +1509,9 @@ Internet-Draft                 AI-Internet                September 2025
 
 
 
-Akhavain & Moussa         Expires 13 March 2026                [Page 27]
+Akhavain & Moussa         Expires 25 April 2026                [Page 27]
 
-Internet-Draft                 AI-Internet                September 2025
+Internet-Draft                 AI-Internet                  October 2025
 
 
    resource, and reachability topology engine (DRRT) housed within the
@@ -1565,9 +1565,9 @@ Internet-Draft                 AI-Internet                September 2025
 
 
 
-Akhavain & Moussa         Expires 13 March 2026                [Page 28]
+Akhavain & Moussa         Expires 25 April 2026                [Page 28]
 
-Internet-Draft                 AI-Internet                September 2025
+Internet-Draft                 AI-Internet                  October 2025
 
 
    broad to allow flexibility in its design and contents.  Nonetheless,
@@ -1621,9 +1621,9 @@ Internet-Draft                 AI-Internet                September 2025
 
 
 
-Akhavain & Moussa         Expires 13 March 2026                [Page 29]
+Akhavain & Moussa         Expires 25 April 2026                [Page 29]
 
-Internet-Draft                 AI-Internet                September 2025
+Internet-Draft                 AI-Internet                  October 2025
 
 
    Moreover, the OAM layer enables interactive control.  Clients can use
@@ -1677,9 +1677,9 @@ Internet-Draft                 AI-Internet                September 2025
 
 
 
-Akhavain & Moussa         Expires 13 March 2026                [Page 30]
+Akhavain & Moussa         Expires 25 April 2026                [Page 30]
 
-Internet-Draft                 AI-Internet                September 2025
+Internet-Draft                 AI-Internet                  October 2025
 
 
 6.  DA-ITN for Training
@@ -1733,9 +1733,9 @@ Internet-Draft                 AI-Internet                September 2025
 
 
 
-Akhavain & Moussa         Expires 13 March 2026                [Page 31]
+Akhavain & Moussa         Expires 25 April 2026                [Page 31]
 
-Internet-Draft                 AI-Internet                September 2025
+Internet-Draft                 AI-Internet                  October 2025
 
 
    moving a model toward a compute facility requires authorization for
@@ -1789,9 +1789,9 @@ Internet-Draft                 AI-Internet                September 2025
 
 
 
-Akhavain & Moussa         Expires 13 March 2026                [Page 32]
+Akhavain & Moussa         Expires 25 April 2026                [Page 32]
 
-Internet-Draft                 AI-Internet                September 2025
+Internet-Draft                 AI-Internet                  October 2025
 
 
    components that collaboratively determine how, where, and whether
@@ -1845,9 +1845,9 @@ Internet-Draft                 AI-Internet                September 2025
 
 
 
-Akhavain & Moussa         Expires 13 March 2026                [Page 33]
+Akhavain & Moussa         Expires 25 April 2026                [Page 33]
 
-Internet-Draft                 AI-Internet                September 2025
+Internet-Draft                 AI-Internet                  October 2025
 
 
 7.  DA-ITN for Inference
@@ -1901,9 +1901,9 @@ Internet-Draft                 AI-Internet                September 2025
 
 
 
-Akhavain & Moussa         Expires 13 March 2026                [Page 34]
+Akhavain & Moussa         Expires 25 April 2026                [Page 34]
 
-Internet-Draft                 AI-Internet                September 2025
+Internet-Draft                 AI-Internet                  October 2025
 
 
    coordinates with the Network layer to collect the required
@@ -1957,9 +1957,9 @@ Internet-Draft                 AI-Internet                September 2025
 
 
 
-Akhavain & Moussa         Expires 13 March 2026                [Page 35]
+Akhavain & Moussa         Expires 25 April 2026                [Page 35]
 
-Internet-Draft                 AI-Internet                September 2025
+Internet-Draft                 AI-Internet                  October 2025
 
 
    In a collaborative training setup, agents may exchange model
@@ -2013,9 +2013,9 @@ Internet-Draft                 AI-Internet                September 2025
 
 
 
-Akhavain & Moussa         Expires 13 March 2026                [Page 36]
+Akhavain & Moussa         Expires 25 April 2026                [Page 36]
 
-Internet-Draft                 AI-Internet                September 2025
+Internet-Draft                 AI-Internet                  October 2025
 
 
    The DA-ITN architecture offers a forward-looking response to this
@@ -2033,19 +2033,14 @@ Internet-Draft                 AI-Internet                September 2025
 
 Contributors
 
-   Arashmid Akhavain
-   Huawei Canada
-   Email: arashmid.akhavain@huawei.com
-
-
-   Hesham Moussa
-   Huawei Canada
-   Email: hesham.moussa@huawei.com
-
-
    Tong Wen
    Huawei
    Email: tongwen@huawei.com
+
+
+   Reza Rokui
+   Ciena
+   Email: rrokui@ciena.com
 
 
 Authors' Addresses
@@ -2069,4 +2064,9 @@ Authors' Addresses
 
 
 
-Akhavain & Moussa         Expires 13 March 2026                [Page 37]
+
+
+
+
+
+Akhavain & Moussa         Expires 25 April 2026                [Page 37]
